@@ -1,3 +1,7 @@
+# assets (databases/images etc)
+*/**/*.db
+*/**/*.png
+
 # Built application files
 *.apk
 *.aar
