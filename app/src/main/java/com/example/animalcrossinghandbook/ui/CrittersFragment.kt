@@ -1,7 +1,5 @@
 package com.example.animalcrossinghandbook.ui
 
-import android.app.Application
-import android.content.res.Configuration
 import androidx.lifecycle.ViewModelProviders
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -30,8 +28,9 @@ class CrittersFragment : Fragment() {
         val application = requireNotNull(this.activity).application
 
         // reference to DAO
-        val dataSource = AnimalCrossingDatabase.getInstance(application).bugDao()
-        val viewModelFactory = CrittersViewModelFactory(dataSource, application)
+        val dataSourceBug = AnimalCrossingDatabase.getInstance(application).bugDao()
+        val dataSourceFish = AnimalCrossingDatabase.getInstance(application).fishDao()
+        val viewModelFactory = CrittersViewModelFactory(dataSourceBug, dataSourceFish, application)
 
         // Get a reference to the ViewModel associated with this fragment.
         val crittersViewModel =
@@ -40,7 +39,7 @@ class CrittersFragment : Fragment() {
 
 
         /* Data binding for ViewModel */
-        binding.setLifecycleOwner(this)
+        binding.lifecycleOwner = this
 
         // see fragment_critters.xml
         binding.crittersViewModel = crittersViewModel
@@ -51,10 +50,15 @@ class CrittersFragment : Fragment() {
 
         crittersViewModel.bugs.observe(viewLifecycleOwner, Observer {
             it?.let{
-                adapter.data = it
+                adapter.databug = it
             }
         })
 
+        crittersViewModel.fish.observe(viewLifecycleOwner, Observer {
+            it?.let{
+                adapter.datafish = it
+            }
+        })
 
         return binding.root
     }
