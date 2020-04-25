@@ -1,4 +1,4 @@
-package com.example.animalcrossinghandbook.entities
+package com.example.animalcrossinghandbook.tmp
 
 import androidx.room.TypeConverter
 

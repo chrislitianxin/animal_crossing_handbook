@@ -1,4 +1,4 @@
-package com.example.animalcrossinghandbook.ui.notifications
+package com.example.animalcrossinghandbook.ui.fragments
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,6 +9,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.animalcrossinghandbook.R
+import com.example.animalcrossinghandbook.viewmodels.NotificationsViewModel
 
 class NotificationsFragment : Fragment() {
 

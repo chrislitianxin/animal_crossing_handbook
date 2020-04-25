@@ -4,11 +4,11 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.explore.ExploreFragment">
+    tools:context=".ui.fragments.ExploreFragment">
 
-    <androidx.fragment.app.FragmentContainerView
-        android:id="@+id/critters_list"
-        android:name="com.example.animalcrossinghandbook.ui.CrittersFragment"
+    <fragment
+        android:id="@+id/fragment_list_bugs"
+        android:name="com.example.animalcrossinghandbook.ui.fragments.BugsFragment"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:label="@string/title_explore"
@@ -16,6 +16,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        tools:layout="@layout/fragment_critters" />
+        tools:layout="@layout/fragment_list_bugs" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

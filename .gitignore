@@ -1,3 +1,9 @@
+#mac os
+# General
+.DS_Store
+.AppleDouble
+.LSOverride
+
 # Built application files
 *.apk
 *.aar

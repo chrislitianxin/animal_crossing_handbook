@@ -1,16 +1,13 @@
-package com.example.animalcrossinghandbook.ui.home
+package com.example.animalcrossinghandbook.viewmodels
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.animalcrossinghandbook.entities.BugDao
 
-class HomeViewModel : ViewModel() {
+class ExploreViewModel : ViewModel() {
 
     private val _text = MutableLiveData<String>().apply {
-        value = "This is home Fragment"
+        value = "This is dashboard Fragment"
     }
     val text: LiveData<String> = _text
-
-
 }

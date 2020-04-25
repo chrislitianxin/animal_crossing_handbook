@@ -1,7 +1,6 @@
 package com.example.animalcrossinghandbook
 
-import androidx.room.Database
-import com.example.animalcrossinghandbook.entities.*
+import com.example.animalcrossinghandbook.data.*
 import androidx.room.Room
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry

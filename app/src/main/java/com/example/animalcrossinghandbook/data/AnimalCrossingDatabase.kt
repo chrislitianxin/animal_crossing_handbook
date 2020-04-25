@@ -1,10 +1,9 @@
-package com.example.animalcrossinghandbook.entities
+package com.example.animalcrossinghandbook.data
 
 import android.content.Context
 import androidx.room.Room
 import androidx.room.Database
 import androidx.room.RoomDatabase
-import androidx.room.TypeConverters
 
 
 @Database(

@@ -5,20 +5,20 @@
 
     <data>
         <variable
-            name="crittersViewModel"
-            type="com.example.animalcrossinghandbook.ui.CrittersViewModel" />
+            name="bugsViewModel"
+            type="com.example.animalcrossinghandbook.viewmodels.BugsViewModel" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".ui.CrittersFragment">
+        tools:context=".ui.fragments.BugsFragment">
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/critters_list"
+            android:id="@+id/bugs_list"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+            app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
