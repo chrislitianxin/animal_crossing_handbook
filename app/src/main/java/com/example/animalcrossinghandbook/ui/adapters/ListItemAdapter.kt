@@ -23,12 +23,13 @@ class ListItemAdapter(
      * Adapter for Common List Items As a RecyclerView
      *  Villager, Bug, Fish
      */
-    private lateinit var mSourceList: List<Any>
+    private var mSourceList: List<Any> = ArrayList()
     private var mFilterList: List<Any> = ArrayList()
     // cannot lateinit, getCount() needs this
 
 
     init {
+        initList(data)
         setDiffCallback(DiffListItemCallback())
     }
 
@@ -80,14 +81,8 @@ class ListItemAdapter(
      * Initialize lists to be filtered
      */
     fun initList(list: List<Any>) {
-        if (list != null) {
-            mSourceList = list
-            mFilterList = list
-        }
-    }
-
-    override fun getItemCount(): Int {
-        return mFilterList.size
+        mSourceList = list
+        mFilterList = list
     }
 
     override fun getFilter(): Filter {

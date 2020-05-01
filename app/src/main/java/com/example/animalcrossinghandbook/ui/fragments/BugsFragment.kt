@@ -17,6 +17,7 @@ import com.example.animalcrossinghandbook.databinding.FragmentListBugsBinding
 import com.example.animalcrossinghandbook.ui.adapters.ListItemAdapter
 import com.example.animalcrossinghandbook.viewmodelfactorys.BugsViewModelFactory
 import com.example.animalcrossinghandbook.viewmodels.BugsViewModel
+import timber.log.Timber
 
 /**
  *
@@ -92,9 +93,9 @@ class BugsFragment : Fragment() {
      * Subscribe data to UI
      */
     private fun subscribeUi(bugsViewModel: BugsViewModel) {
+        //mAdapter.initList(bugsViewModel.items)
         bugsViewModel.items.observe(viewLifecycleOwner, Observer {
             it?.let {
-                mAdapter.initList(it)
                 mAdapter.setList(it)
             }
         })
