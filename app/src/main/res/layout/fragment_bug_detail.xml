@@ -13,40 +13,43 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.BugDetailFragment">
+        tools:context=".ui.fragments.BugDetailFragment">
 
         <ImageView
-            android:id="@+id/bug_name"
+            android:id="@+id/bug_icon"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:layout_constraintBottom_toTopOf="@+id/bug_location"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.498"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.0"
-            tools:srcCompat="@drawable/agrias_butterfly" />
-
-        <TextView
-            android:id="@+id/bug_location"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="TextView"
-            app:layout_constraintBottom_toTopOf="@+id/textView2"
+            android:contentDescription="Bug Icon"
+            app:bugIcon="@{bugDetailViewModel.bug}"
+            app:layout_constraintBottom_toTopOf="@+id/bug_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bug_name"
-            tools:srcCompat="Butterfly" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/agrias_butterfly" />
 
         <TextView
-            android:id="@+id/textView2"
+            android:id="@+id/bug_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="TextView"
+            app:bugName="@{bugDetailViewModel.bug}"
+            app:layout_constraintBottom_toTopOf="@+id/bug_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bug_icon"
+            tools:text="Agrias Butterfly" />
+
+        <TextView
+            android:id="@+id/bug_price"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:bugPrice="@{bugDetailViewModel.bug}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bug_location" />
+            app:layout_constraintTop_toBottomOf="@+id/bug_name"
+            tools:text="500" />
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

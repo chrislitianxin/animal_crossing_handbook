@@ -15,11 +15,38 @@
         android:id="@+id/navigation_explore"
         android:name="com.example.animalcrossinghandbook.ui.fragments.ExploreFragment"
         android:label="@string/title_explore"
-        tools:layout="@layout/fragment_explore" />
+        tools:layout="@layout/fragment_explore">
+        <action
+            android:id="@+id/action_navigation_explore_to_bugsFragment"
+            app:destination="@id/bugsFragment" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/bugsFragment"
+        android:name="com.example.animalcrossinghandbook.ui.fragments.BugsFragment"
+        android:label="BugsFragment">
+        <action
+            android:id="@+id/action_bugsFragment_to_bugDetailFragment"
+            app:destination="@id/bugDetailFragment" />
+
+    </fragment>
 
     <fragment
         android:id="@+id/navigation_notifications"
         android:name="com.example.animalcrossinghandbook.ui.fragments.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
+    <fragment
+        android:id="@+id/bugDetailFragment"
+        android:name="com.example.animalcrossinghandbook.ui.fragments.BugDetailFragment"
+        android:label="BugDetailFragment">
+        <argument
+            android:name="itemId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_bugDetailFragment_to_bugsFragment"
+            app:destination="@id/bugsFragment" />
+    </fragment>
+
+
 </navigation>

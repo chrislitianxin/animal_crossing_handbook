@@ -11,10 +11,10 @@ abstract class FishDao : BaseDao<Fish> {
     abstract fun getAll(): LiveData<List<Fish>>
 
     @Query("SELECT * FROM fish WHERE id = :id")
-    abstract fun getById(id: Int): Fish?
+    abstract fun getById(id: Int): LiveData<Fish>
 
     @Query("SELECT * FROM fish WHERE name = :name")
-    abstract fun getByName(name: String): Fish?
+    abstract fun getByName(name: String): LiveData<Fish>
 
     @Query("DELETE FROM fish")
     abstract fun clearAll()

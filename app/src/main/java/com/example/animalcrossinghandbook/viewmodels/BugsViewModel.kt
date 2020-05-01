@@ -7,6 +7,10 @@ import com.example.animalcrossinghandbook.data.BugDao
 import kotlinx.coroutines.*
 import timber.log.Timber
 
+/**
+ * @param database
+ * @param application
+ */
 class BugsViewModel(
     val database: BugDao,
     application: Application
@@ -29,13 +33,11 @@ class BugsViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     // data
-    //private var items = MutableLiveData<Bug?>()
     val items = database.getAll()
 
     init {
         initializeBugsData()
     }
-
 
     private fun initializeBugsData() {
         uiScope.launch {
@@ -45,14 +47,30 @@ class BugsViewModel(
     }
 
 
-
-
     // update bug TODO implement in_museum
     private suspend fun update(bug: Bug) {
         withContext(Dispatchers.IO) {
             database.update(bug)
         }
     }
+
+
+    /**
+     * encapsulated live data changes when navigating
+     */
+    private val _navigateToItemDetail = MutableLiveData<Int>()
+
+    val navigateToItemDetail
+        get() = _navigateToItemDetail
+
+    fun onItemClicked(itemId: Int) {
+        _navigateToItemDetail.value = itemId
+    }
+
+    fun onItemDetailNavigated() {
+        _navigateToItemDetail.value = null
+    }
+
 
     /**
      * Called when the ViewModel is dismantled.
@@ -64,6 +82,8 @@ class BugsViewModel(
         super.onCleared()
         viewModelJob.cancel()
     }
+
+
 }
 
 

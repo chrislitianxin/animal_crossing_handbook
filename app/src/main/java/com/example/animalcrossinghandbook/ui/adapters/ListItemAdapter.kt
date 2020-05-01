@@ -1,58 +1,174 @@
 package com.example.animalcrossinghandbook.ui.adapters
 
+import android.annotation.SuppressLint
+import android.widget.Filter
+import android.widget.Filterable
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
+import androidx.recyclerview.widget.DiffUtil
 import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
-import com.example.animalcrossinghandbook.R
 import com.example.animalcrossinghandbook.data.Bug
 import com.example.animalcrossinghandbook.data.Fish
-import kotlinx.android.synthetic.main.list_item_bug.view.*
+import com.example.animalcrossinghandbook.databinding.ListItemBugBinding
 import org.jetbrains.annotations.NotNull
+import timber.log.Timber
 
-class ListItemAdapter(private val resLayoutId: Int):
-    BaseQuickAdapter<Any, BaseViewHolder>(resLayoutId, ArrayList()) {
 
+class ListItemAdapter(
+    private val resLayoutId: Int
+) : BaseQuickAdapter<Any, BaseViewHolder>(resLayoutId, ArrayList()),
+    Filterable {
     /**
-     * Adapter for Common List Items
+     * Adapter for Common List Items As a RecyclerView
      *  Villager, Bug, Fish
      */
+    private lateinit var mSourceList: List<Any>
+    private var mFilterList: List<Any> = ArrayList()
+    // cannot lateinit, getCount() needs this
 
 
+    init {
+        setDiffCallback(DiffListItemCallback())
+    }
+
+    // this callback will be executed when ViewHolder is created
+    override fun onItemViewHolderCreated(
+        viewHolder: BaseViewHolder,
+        viewType: Int
+    ) {
+        // binding view
+        DataBindingUtil.bind<ViewDataBinding>(viewHolder.itemView)
+
+    }
+
+
+    //Set item data here
+    override fun convert(@NotNull holder: BaseViewHolder, @NotNull item: Any) {
+        when (item) {
+            is Bug -> convertBugs(holder, item)
+            //is Fish -> convertFish(holder, item)
+            else -> Timber.e("Unhandled conversion type")
+        }
+    }
+
+    // converter for Bug items
+    private fun convertBugs(holder: BaseViewHolder, item: Bug) {
+
+        val binding: ListItemBugBinding? = DataBindingUtil.getBinding(holder.itemView)
+
+        if (binding != null) {
+            // set data
+            binding.bug = item
+            binding.executePendingBindings()
+        }
+    }
+
+    //    private fun convertFish(holder: BaseViewHolder, item: Fish) {
+//
+//        val binding: ListItemFishBinding? = DataBindingUtil.getBinding(holder.itemView)
+//
+//        if (binding != null) {
+//            // set data
+//            binding.fish = item
+//            binding.executePendingBindings()
+//        }
+//    }
 
 
     /**
-     *  Set item data here
+     * Initialize lists to be filtered
      */
-    override fun convert(@NotNull holder: BaseViewHolder, @NotNull item: Any) {
-        when(item){
-            is Bug -> convertBugs(holder, item)
-            //is Fish -> convertFish(holder, item)
+    fun initList(list: List<Any>) {
+        if (list != null) {
+            mSourceList = list
+            mFilterList = list
+        }
+    }
+
+    override fun getItemCount(): Int {
+        return mFilterList.size
+    }
+
+    override fun getFilter(): Filter {
+        return object : Filter() {
+
+            override fun performFiltering(constraint: CharSequence): FilterResults {
+                val charString = constraint.toString()
+                mFilterList = if (charString.isEmpty()) {
+                    // no filter entered, use origianl
+                    mSourceList
+                } else {
+                    val filteredList: MutableList<Any> = ArrayList()
+                    for (item in mSourceList) {
+                        if (shouldBeFiltered(item, charString)) filteredList.add(item)
+                    }
+                    filteredList
+                }
+
+                val filterResults = FilterResults()
+                filterResults.values = mFilterList
+                return filterResults
+            }
+
+            override fun publishResults(
+                constraint: CharSequence,
+                results: FilterResults
+            ) {
+                val list: MutableList<Any>? =
+                    results.values as? MutableList<Any> // safe cast, neat!
+                //val callback = DiffListItemCallback(list)
+                setDiffNewData(list)
+            }
+
+
+            /**
+             * Contains the logic for filtering
+             */
+            private fun shouldBeFiltered(item: Any, filterString: String): Boolean {
+                val filterString = filterString.toLowerCase().trim { it <= ' ' }
+
+                val itemName = when (item) {
+                    is Bug -> item.name.toLowerCase()
+                    is Fish -> item.name.toLowerCase()
+                    else -> {
+                        Timber.e("Filtering Type unhandled")
+                        ""
+                    }
+                }
+                return itemName.contains(filterString)
+            }
         }
     }
 
 
-    private fun convertBugs(holder: BaseViewHolder, item: Bug) {
-        holder.setText(R.id.bug_name, item.name)
+}
 
-        // !! convert item.price from Int? to Int
-        holder.setText(R.id.bug_price, item.price!!.toString())
 
-        val drawableId: Int =
-            context.resources.getIdentifier(item.filename, "drawable", context.packageName)
-        holder.setImageResource(R.id.bug_icon, drawableId)
+class DiffListItemCallback() :
+    DiffUtil.ItemCallback<Any>() {
+    /**
+     * Checking if items are the same
+     *
+     * @param oldItem New data
+     * @param newItem old Data
+     * @return
+     */
 
+    override fun areItemsTheSame(oldItem: Any, newItem: Any): Boolean {
+        return when {
+            oldItem is Bug && newItem is Bug -> oldItem.id == newItem.id
+            oldItem is Fish && newItem is Fish -> oldItem.id == newItem.id
+            else -> false
+        }
     }
 
-
-    private fun convertFish(holder: BaseViewHolder, item: Fish) {
-        holder.setText(R.id.fish_name, item.name)
-
-        // !! convert item.price from Int? to Int
-        holder.setText(R.id.fish_price, item.price!!.toString())
-
-        val drawableId: Int =
-            context.resources.getIdentifier(item.filename, "drawable", context.packageName)
-        holder.setImageResource(R.id.fish_icon, drawableId)
-
+    @SuppressLint("DiffUtilEquals")
+    override fun areContentsTheSame(oldItem: Any, newItem: Any): Boolean {
+        return when {
+            oldItem is Bug && newItem is Bug -> oldItem == newItem
+            oldItem is Fish && newItem is Fish -> oldItem == newItem
+            else -> false
+        }
     }
-
 }
