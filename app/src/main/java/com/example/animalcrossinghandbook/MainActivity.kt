@@ -2,13 +2,16 @@ package com.example.animalcrossinghandbook
 
 import android.os.Bundle
 import android.view.Menu
-import com.google.android.material.bottomnavigation.BottomNavigationView
+import android.view.MenuItem
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import timber.log.Timber
+
 
 class MainActivity : AppCompatActivity() {
 
@@ -27,6 +30,9 @@ class MainActivity : AppCompatActivity() {
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
 
+        //supportActionBar?.setDisplayHomeAsUpEnabled(true);
+        //supportActionBar.setDisplayShowHomeEnabled(true);
+
 
     }
 
@@ -37,5 +43,13 @@ class MainActivity : AppCompatActivity() {
         menuInflater.inflate(R.menu.options_menu, menu)
         menu.findItem(R.id.item_search).isVisible = false
         return true
+    }
+
+    // enable back press
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        if (item.itemId == android.R.id.home) {
+            super.onBackPressed()
+        }
+        return super.onOptionsItemSelected(item)
     }
 }
