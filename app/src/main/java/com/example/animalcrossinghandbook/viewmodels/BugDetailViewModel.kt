@@ -12,19 +12,23 @@ class BugDetailViewModel(
     private val bugId: Int = 0,
     dataSource: BugDao
 ) : ViewModel() {
+    /**
+     * TODO should refactor this to use repository for data access, using mediator live data is a workaround
+     * reference https://stackoverflow.com/questions/49602606/how-can-we-assign-livedata-from-room-to-mutablelivedata-within-viewmodel
+     */
     private var viewModelJob = Job()
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
     val database = dataSource
 
     // reference to db
-    private val bug = MediatorLiveData<Bug>()
+    val bug: LiveData<Bug>
+        get() = _bug
+    private val _bug = MediatorLiveData<Bug>()
     // needed this to avoid cannot find symbol error
-    fun getBug() = bug
 
 
     init {
-        bug.addSource(database.getById(bugId),bug::setValue)
-        //initializeBugsData()
+        _bug.addSource(database.getById(bugId),_bug::setValue)
     }
 
     private fun initializeBugsData() {

@@ -17,7 +17,6 @@ import com.example.animalcrossinghandbook.databinding.FragmentListBugsBinding
 import com.example.animalcrossinghandbook.ui.adapters.ListItemAdapter
 import com.example.animalcrossinghandbook.viewmodelfactorys.BugsViewModelFactory
 import com.example.animalcrossinghandbook.viewmodels.BugsViewModel
-import timber.log.Timber
 
 /**
  *
@@ -101,9 +100,13 @@ class BugsFragment : Fragment() {
         })
     }
 
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.options_menu, menu)
-        val menuItem = menu.findItem(R.id.search)
+
+    override fun onPrepareOptionsMenu(menu: Menu) {
+        super.onPrepareOptionsMenu(menu)
+
+        val menuItem = menu.findItem(R.id.item_search)
+        menuItem.isVisible = true
+
         val searchView =
             menuItem.actionView as SearchView
 

@@ -26,10 +26,16 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home, R.id.navigation_explore, R.id.navigation_notifications))
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+
+
     }
 
+    // setup action menu search bar but hide it
     override fun onCreateOptionsMenu(menu: Menu): Boolean {
+        super.onCreateOptionsMenu(menu)
+
         menuInflater.inflate(R.menu.options_menu, menu)
+        menu.findItem(R.id.item_search).isVisible = false
         return true
     }
 }

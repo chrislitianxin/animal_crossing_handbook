@@ -12,20 +12,21 @@ import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
 import com.example.animalcrossinghandbook.databinding.FragmentBugDetailBinding
 import com.example.animalcrossinghandbook.viewmodelfactorys.BugDetailViewModelFactory
 import com.example.animalcrossinghandbook.viewmodels.BugDetailViewModel
+import timber.log.Timber
 
 /**
  * Single Bug Detail Screen
  */
-class BugDetailFragment: Fragment() {
+class BugDetailFragment : Fragment() {
 
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-
         val binding: FragmentBugDetailBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_bug_detail, container, false)
+            inflater, R.layout.fragment_bug_detail, container, false
+        )
 
         val application = requireNotNull(this.activity).application
 
@@ -38,7 +39,8 @@ class BugDetailFragment: Fragment() {
         // Get a reference to the ViewModel associated with this fragment.
         val bugDetailViewModel =
             ViewModelProviders.of(
-                this, viewModelFactory).get(BugDetailViewModel::class.java)
+                this, viewModelFactory
+            ).get(BugDetailViewModel::class.java)
 
         // To use the View Model with data binding, you have to explicitly
         // give the binding object a reference to it.
