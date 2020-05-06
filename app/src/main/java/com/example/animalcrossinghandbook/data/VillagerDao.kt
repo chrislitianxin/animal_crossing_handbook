@@ -10,7 +10,7 @@ abstract class VillagerDao : BaseDao<Villager> {
     abstract fun getAll(): LiveData<List<Villager>>
 
     @Query("SELECT * FROM villagers WHERE id = :id")
-    abstract fun getById(id: Int): Villager?
+    abstract fun getById(id: Int): LiveData<Villager>
 
     @Query("SELECT * FROM villagers WHERE name = :name")
     abstract fun getByName(name: String): Villager?
@@ -20,5 +20,6 @@ abstract class VillagerDao : BaseDao<Villager> {
 
     @Query("SELECT COUNT(id) FROM villagers")
     abstract fun count(): Int
+
 
 }

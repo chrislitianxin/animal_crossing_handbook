@@ -9,17 +9,12 @@
         <variable
             name="bug"
             type="com.example.animalcrossinghandbook.data.Bug" />
-
-<!--        <variable-->
-<!--            name="clickListener"-->
-<!--            type="com.example.animalcrossinghandbook.ui.adapters.ListItemAdapter.ListItemClickListener" />-->
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-        <!--        android:onClick="@{() -> clickListener.onBugClick(bug)}"-->
 
         <androidx.cardview.widget.CardView
             android:id="@+id/card"

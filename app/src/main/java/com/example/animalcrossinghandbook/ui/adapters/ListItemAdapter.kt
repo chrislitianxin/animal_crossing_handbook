@@ -10,7 +10,9 @@ import com.chad.library.adapter.base.BaseQuickAdapter
 import com.chad.library.adapter.base.viewholder.BaseViewHolder
 import com.example.animalcrossinghandbook.data.Bug
 import com.example.animalcrossinghandbook.data.Fish
+import com.example.animalcrossinghandbook.data.Villager
 import com.example.animalcrossinghandbook.databinding.ListItemBugBinding
+import com.example.animalcrossinghandbook.databinding.ListItemVillagerBinding
 import org.jetbrains.annotations.NotNull
 import timber.log.Timber
 
@@ -48,7 +50,9 @@ class ListItemAdapter(
     override fun convert(@NotNull holder: BaseViewHolder, @NotNull item: Any) {
         when (item) {
             is Bug -> convertBugs(holder, item)
-            //is Fish -> convertFish(holder, item)
+            is Fish -> convertFish(holder, item)
+            is Villager -> convertVillagers(holder, item)
+
             else -> Timber.e("Unhandled conversion type")
         }
     }
@@ -65,7 +69,7 @@ class ListItemAdapter(
         }
     }
 
-    //    private fun convertFish(holder: BaseViewHolder, item: Fish) {
+    private fun convertFish(holder: BaseViewHolder, item: Fish) {
 //
 //        val binding: ListItemFishBinding? = DataBindingUtil.getBinding(holder.itemView)
 //
@@ -74,7 +78,19 @@ class ListItemAdapter(
 //            binding.fish = item
 //            binding.executePendingBindings()
 //        }
-//    }
+    }
+
+    // converter for Villagers
+    private fun convertVillagers(holder: BaseViewHolder, item: Villager) {
+
+        val binding: ListItemVillagerBinding? = DataBindingUtil.getBinding(holder.itemView)
+
+        if (binding != null) {
+            // set data
+            binding.villager = item
+            binding.executePendingBindings()
+        }
+    }
 
 
     /**
@@ -119,19 +135,23 @@ class ListItemAdapter(
 
             /**
              * Contains the logic for filtering
+             * Only need to modify this when adding new class
              */
             private fun shouldBeFiltered(item: Any, filterString: String): Boolean {
-                val filterString = filterString.toLowerCase().trim { it <= ' ' }
+                val trimmedFilterString = filterString.toLowerCase().trim { it <= ' ' }
 
                 val itemName = when (item) {
+
                     is Bug -> item.name.toLowerCase()
                     is Fish -> item.name.toLowerCase()
+                    is Villager -> item.name.toLowerCase()
+
                     else -> {
                         Timber.e("Filtering Type unhandled")
                         ""
                     }
                 }
-                return itemName.contains(filterString)
+                return itemName.contains(trimmedFilterString)
             }
         }
     }
@@ -144,6 +164,7 @@ class DiffListItemCallback() :
     DiffUtil.ItemCallback<Any>() {
     /**
      * Checking if items are the same
+     * Modify the two overriding function anytime a comparision class is added
      *
      * @param oldItem New data
      * @param newItem old Data
@@ -154,6 +175,8 @@ class DiffListItemCallback() :
         return when {
             oldItem is Bug && newItem is Bug -> oldItem.id == newItem.id
             oldItem is Fish && newItem is Fish -> oldItem.id == newItem.id
+            oldItem is Villager && newItem is Villager -> oldItem.id == newItem.id
+
             else -> false
         }
     }
@@ -163,6 +186,8 @@ class DiffListItemCallback() :
         return when {
             oldItem is Bug && newItem is Bug -> oldItem == newItem
             oldItem is Fish && newItem is Fish -> oldItem == newItem
+            oldItem is Villager && newItem is Villager -> oldItem == newItem
+
             else -> false
         }
     }

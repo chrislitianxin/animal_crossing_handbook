@@ -19,8 +19,18 @@
         <action
             android:id="@+id/action_navigation_explore_to_bugsFragment"
             app:destination="@id/bugsFragment" />
+        <action
+            android:id="@+id/action_navigation_explore_to_villagersFragment"
+            app:destination="@id/villagersFragment" />
     </fragment>
 
+    <fragment
+        android:id="@+id/navigation_notifications"
+        android:name="com.example.animalcrossinghandbook.ui.fragments.NotificationsFragment"
+        android:label="@string/title_notifications"
+        tools:layout="@layout/fragment_notifications" />
+
+    <!-- BUGS -->
     <fragment
         android:id="@+id/bugsFragment"
         android:name="com.example.animalcrossinghandbook.ui.fragments.BugsFragment"
@@ -30,12 +40,6 @@
             app:destination="@id/bugDetailFragment" />
 
     </fragment>
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.animalcrossinghandbook.ui.fragments.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
     <fragment
         android:id="@+id/bugDetailFragment"
         android:name="com.example.animalcrossinghandbook.ui.fragments.BugDetailFragment"
@@ -46,6 +50,27 @@
         <action
             android:id="@+id/action_bugDetailFragment_to_bugsFragment"
             app:destination="@id/bugsFragment" />
+    </fragment>
+
+    <!-- VILLAGERS -->
+    <fragment
+        android:id="@+id/villagersFragment"
+        android:name="com.example.animalcrossinghandbook.ui.fragments.VillagersFragment"
+        android:label="VillagersFragment">
+        <action
+            android:id="@+id/action_villagersFragment_to_villagerDetailFragment"
+            app:destination="@id/villagerDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/villagerDetailFragment"
+        android:name="com.example.animalcrossinghandbook.ui.fragments.VillagerDetailFragment"
+        android:label="VillagerDetailFragment">
+        <argument
+            android:name="itemId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_villagerDetailFragment_to_villagersFragment"
+            app:destination="@id/villagersFragment" />
     </fragment>
 
 

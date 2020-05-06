@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="villagerDetailViewModel"
+            type="com.example.animalcrossinghandbook.viewmodels.VillagerDetailViewModel" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".ui.fragments.VillagerDetailFragment">
+
+        <ImageView
+            android:id="@+id/villager_icon"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Villager Icon"
+            app:villagerIcon="@{villagerDetailViewModel.villager}"
+            app:layout_constraintBottom_toTopOf="@+id/villager_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/ant01" />
+
+        <TextView
+            android:id="@+id/villager_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:villagerName="@{villagerDetailViewModel.villager}"
+            app:layout_constraintBottom_toTopOf="@+id/villager_personality"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/villager_icon"
+            tools:text="Villager Bla" />
+
+        <TextView
+            android:id="@+id/villager_personality"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            app:villagerPersonality="@{villagerDetailViewModel.villager}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/villager_name"
+            tools:text="Sisterly" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

@@ -21,6 +21,8 @@ abstract class AnimalCrossingDatabase : RoomDatabase() {
 
     abstract fun bugDao(): BugDao
     abstract fun fishDao(): FishDao
+    abstract fun villagerDao(): VillagerDao
+
 
     companion object {
 

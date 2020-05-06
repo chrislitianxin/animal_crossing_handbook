@@ -11,7 +11,6 @@ import androidx.navigation.findNavController
 import com.example.animalcrossinghandbook.R
 import com.example.animalcrossinghandbook.databinding.FragmentExploreBinding
 import com.example.animalcrossinghandbook.viewmodels.ExploreViewModel
-import kotlinx.android.synthetic.main.fragment_explore.view.*
 
 class ExploreFragment : Fragment() {
 
@@ -32,10 +31,26 @@ class ExploreFragment : Fragment() {
         // bind this fragment class to layout
         binding.explore = this
         //val root = inflater.inflate(R.layout.fragment_explore, container, false)
-        binding.bugButton.setOnClickListener { view: View ->
+
+
+        /**
+         * Navigation Buttons
+         * From: Explore
+         * To: RecyclerView
+         */
+        binding.exploreBugsButton.setOnClickListener { view: View ->
             view.findNavController()
                 .navigate(ExploreFragmentDirections.actionNavigationExploreToBugsFragment())
         }
+
+        binding.exploreVillagersButton.setOnClickListener { view: View ->
+            view.findNavController()
+                .navigate(ExploreFragmentDirections.actionNavigationExploreToVillagersFragment())
+        }
+
+
+
+
         return binding.root
     }
 }
