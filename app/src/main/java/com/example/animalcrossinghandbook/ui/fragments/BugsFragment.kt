@@ -84,6 +84,12 @@ class BugsFragment : Fragment() {
             bugsViewModel.onItemDetailNavigated()
         })
 
+        /**
+         * Set in_museum toggle switch
+         */
+
+
+
         return binding.root
     }
 

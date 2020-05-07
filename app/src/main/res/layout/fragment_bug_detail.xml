@@ -17,11 +17,11 @@
         tools:context=".ui.fragments.BugDetailFragment">
 
         <ImageView
-            android:id="@+id/bug_icon"
+            android:id="@+id/bug_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Bug Icon"
-            app:bugIcon="@{bugDetailViewModel.bug}"
+            android:contentDescription="Bug Image"
+            app:bugImage="@{bugDetailViewModel.bug}"
             app:layout_constraintBottom_toTopOf="@+id/bug_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -38,19 +38,29 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/bug_icon"
+            app:layout_constraintTop_toBottomOf="@+id/bug_image"
             tools:text="Agrias Butterfly" />
 
         <TextView
             android:id="@+id/bug_price"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="17dp"
+            android:layout_height="16dp"
             app:bugPrice="@{bugDetailViewModel.bug}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintBottom_toTopOf="@+id/in_museum_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/bug_name"
             tools:text="500" />
+
+        <Button
+            android:id="@+id/in_museum_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/donate"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/bug_price" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

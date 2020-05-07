@@ -17,11 +17,11 @@
         tools:context=".ui.fragments.VillagerDetailFragment">
 
         <ImageView
-            android:id="@+id/villager_icon"
+            android:id="@+id/villager_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:contentDescription="Villager Icon"
-            app:villagerIcon="@{villagerDetailViewModel.villager}"
+            android:contentDescription="Villager Image"
+            app:villagerImage="@{villagerDetailViewModel.villager}"
             app:layout_constraintBottom_toTopOf="@+id/villager_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -38,7 +38,7 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/villager_icon"
+            app:layout_constraintTop_toBottomOf="@+id/villager_image"
             tools:text="Villager Bla" />
 
         <TextView

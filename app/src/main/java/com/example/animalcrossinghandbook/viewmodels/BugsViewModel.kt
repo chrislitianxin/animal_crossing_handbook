@@ -47,12 +47,7 @@ class BugsViewModel(
     }
 
 
-    // update bug TODO implement in_museum
-    private suspend fun update(bug: Bug) {
-        withContext(Dispatchers.IO) {
-            database.update(bug)
-        }
-    }
+
 
 
     /**

@@ -3,6 +3,8 @@
 .DS_Store
 .AppleDouble
 .LSOverride
+# image
+/**/*.png
 
 # Built application files
 *.apk

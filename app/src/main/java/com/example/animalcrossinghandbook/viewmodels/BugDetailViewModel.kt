@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.animalcrossinghandbook.data.Bug
 import com.example.animalcrossinghandbook.data.BugDao
 import kotlinx.coroutines.*
+import timber.log.Timber
 
 class BugDetailViewModel(
     private val bugId: Int = 0,
@@ -28,22 +29,18 @@ class BugDetailViewModel(
 
 
     init {
-        _bug.addSource(database.getById(bugId),_bug::setValue)
+        _bug.addSource(database.getById(bugId), _bug::setValue)
     }
 
-    private fun initializeBugsData() {
-        uiScope.launch {
-            // update bugs data to display filtered
-        }
+    /**
+     * Toggle switch to mark an item in/out museum
+     */
+    fun toggleInMuseum() {
+        _bug.value?.apply { in_museum = !in_museum }
+        _bug.postValue(_bug.value) // force postValue to notify Observers
     }
 
 
-    // update bug TODO implement in_museum
-    private suspend fun update(bug: Bug) {
-        withContext(Dispatchers.IO) {
-            database.update(bug)
-        }
-    }
 
     override fun onCleared() {
         super.onCleared()

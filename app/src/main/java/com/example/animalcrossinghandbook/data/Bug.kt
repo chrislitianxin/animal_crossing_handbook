@@ -22,7 +22,7 @@ data class Bug(
     val filename: String?,
 
     @ColumnInfo(name = "in_museum")
-    val in_museum: Boolean = false
+    var in_museum: Boolean = false
 
 ) {
 

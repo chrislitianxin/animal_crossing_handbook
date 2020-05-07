@@ -6,13 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import com.example.animalcrossinghandbook.R
 import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
 import com.example.animalcrossinghandbook.databinding.FragmentBugDetailBinding
 import com.example.animalcrossinghandbook.viewmodelfactorys.BugDetailViewModelFactory
 import com.example.animalcrossinghandbook.viewmodels.BugDetailViewModel
-import timber.log.Timber
+
 
 /**
  * Single Bug Detail Screen
@@ -48,7 +49,24 @@ class BugDetailFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-//        // Add an Observer to the state variable for Navigating when a Quality icon is tapped.
+
+        /**
+         * Set in_museum toggle switch
+         */
+        binding.inMuseumToggle.setOnClickListener {
+            bugDetailViewModel.toggleInMuseum()
+        }
+        // change button text based on whether it has been donated
+        // TODO changed to Blather icon
+        bugDetailViewModel.bug.observe(viewLifecycleOwner, Observer {
+            when (it.in_museum) {
+                true -> binding.inMuseumToggle.setText(R.string.donated)
+                false -> binding.inMuseumToggle.setText(R.string.donate)
+            }
+        })
+
+
+        //        // Add an Observer to the state variable for Navigating when a Quality icon is tapped.
 //        bugDetailViewModel.navigateToSleepTracker.observe(this, Observer {
 //            if (it == true) { // Observed state is true.
 //                this.findNavController().navigate(
