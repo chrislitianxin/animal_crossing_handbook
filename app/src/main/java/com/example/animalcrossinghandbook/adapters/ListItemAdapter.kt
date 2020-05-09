@@ -1,4 +1,4 @@
-package com.example.animalcrossinghandbook.ui.adapters
+package com.example.animalcrossinghandbook.adapters
 
 import android.annotation.SuppressLint
 import android.widget.Filter
@@ -96,7 +96,7 @@ class ListItemAdapter(
     /**
      * Initialize lists to be filtered
      */
-    fun initList(list: List<Any>) {
+    private fun initList(list: List<Any>) {
         mSourceList = list
         mFilterList = list
     }

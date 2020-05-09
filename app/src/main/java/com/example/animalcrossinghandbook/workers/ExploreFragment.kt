@@ -1,4 +1,4 @@
-package com.example.animalcrossinghandbook.ui.fragments
+package com.example.animalcrossinghandbook.workers
 
 import android.os.Bundle
 import android.view.LayoutInflater

@@ -1,4 +1,4 @@
-package com.example.animalcrossinghandbook.ui.fragments
+package com.example.animalcrossinghandbook.workers
 
 import android.os.Bundle
 import android.view.*
@@ -8,30 +8,23 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.example.animalcrossinghandbook.R
 import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
-import com.example.animalcrossinghandbook.data.Bug
-import com.example.animalcrossinghandbook.databinding.FragmentListBugsBinding
-import com.example.animalcrossinghandbook.ui.adapters.ListItemAdapter
-import com.example.animalcrossinghandbook.viewmodelfactorys.BugsViewModelFactory
-import com.example.animalcrossinghandbook.viewmodels.BugsViewModel
+import com.example.animalcrossinghandbook.data.Villager
+import com.example.animalcrossinghandbook.databinding.FragmentListVillagersBinding
+import com.example.animalcrossinghandbook.adapters.ListItemAdapter
+import com.example.animalcrossinghandbook.viewmodelfactorys.VillagersViewModelFactory
+import com.example.animalcrossinghandbook.viewmodels.VillagersViewModel
 
-/**
- *
- */
-class BugsFragment : Fragment() {
+
+class VillagersFragment : Fragment() {
     /**
-     * This fragment could totally be shared by fish and bug to be
-     * CrittersFragment with just different data passed in
-     * That will be more convoluted, separating bugs and fish
-     * from each other so it can be easily extended in the future
      *
-     * However, bug and fish fragment share the same layout res
      */
 
-    private val mAdapter = ListItemAdapter(R.layout.list_item_bug)
+    private val mAdapter = ListItemAdapter(R.layout.list_item_villager)
 
 
     override fun onCreateView(
@@ -43,52 +36,46 @@ class BugsFragment : Fragment() {
 
         //passing database dao to ViewModel via ViewModelFactory
         val application = requireNotNull(this.activity).application
-        val dataSource = AnimalCrossingDatabase.getInstance(application).bugDao()
+        val dataSource = AnimalCrossingDatabase.getInstance(application).villagerDao()
 
-        val viewModelFactory = BugsViewModelFactory(dataSource, application)
-        val bugsViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(BugsViewModel::class.java)
+        val viewModelFactory = VillagersViewModelFactory(dataSource, application)
+        val villagersViewModel =
+            ViewModelProviders.of(this, viewModelFactory).get(VillagersViewModel::class.java)
 
 
         // Enable search in app bar
         setHasOptionsMenu(true)
 
-        val binding: FragmentListBugsBinding = DataBindingUtil.inflate(
-            inflater, R.layout.fragment_list_bugs, container, false
+        val binding: FragmentListVillagersBinding = DataBindingUtil.inflate(
+            inflater, R.layout.fragment_list_villagers, container, false
         )
 
         //Grid layout
-        val manager = GridLayoutManager(activity, 3)
-        binding.bugsList.layoutManager = manager
+        val manager = LinearLayoutManager(activity)
+        binding.villagersList.layoutManager = manager
 
         //Data binding for ViewModel
         binding.lifecycleOwner = this
 
         // see fragment_list_bugs.xml
-        binding.bugsViewModel = bugsViewModel
+        binding.villagersViewModel = villagersViewModel
 
         // set and attach adapter
-        binding.bugsList.adapter = mAdapter
+        binding.villagersList.adapter = mAdapter
         mAdapter.animationEnable = true
 
-        subscribeUi(bugsViewModel)
+        subscribeUi(villagersViewModel)
 
         /**
          * Set card click navigation
          */
         mAdapter.setOnItemClickListener(OnItemClickListener { adapter, _, position ->
-            val bugId: Int = (adapter.getItem(position) as Bug).id
+            val id: Int = (adapter.getItem(position) as Villager).id
             findNavController().navigate(
-                BugsFragmentDirections.actionBugsFragmentToBugDetailFragment(bugId)
+                VillagersFragmentDirections.actionVillagersFragmentToVillagerDetailFragment(id)
             )
-            bugsViewModel.onItemDetailNavigated()
+            villagersViewModel.onItemDetailNavigated()
         })
-
-        /**
-         * Set in_museum toggle switch
-         */
-
-
 
         return binding.root
     }
@@ -97,9 +84,9 @@ class BugsFragment : Fragment() {
     /**
      * Subscribe data to UI
      */
-    private fun subscribeUi(bugsViewModel: BugsViewModel) {
+    private fun subscribeUi(viewModel: VillagersViewModel) {
         //mAdapter.initList(bugsViewModel.items)
-        bugsViewModel.items.observe(viewLifecycleOwner, Observer {
+        viewModel.items.observe(viewLifecycleOwner, Observer {
             it?.let {
                 mAdapter.setList(it)
             }

@@ -29,6 +29,13 @@ abstract class BugDao : BaseDao<Bug> {
     @Query("SELECT COUNT(id) FROM bugs")
     abstract fun count(): Int
 
+    @Query("UPDATE bugs SET in_museum = :in_museum WHERE id = :id")
+    abstract fun updateInMuseum(id: Int, in_museum: Boolean)
+
+    @Query("SELECT in_museum FROM bugs WHERE id = :bugId")
+    abstract fun isInMuseum(bugId: Int): LiveData<Boolean>
+
+
 //    @Query("SELECT id, name, price, location, filename FROM bugs")
 //    abstract fun getBugMinimal(): LiveData<BugMinimal>
 }

@@ -39,13 +39,6 @@ class VillagersViewModel(
      */
     private val _navigateToItemDetail = MutableLiveData<Int>()
 
-    val navigateToItemDetail
-        get() = _navigateToItemDetail
-
-    fun onItemClicked(itemId: Int) {
-        _navigateToItemDetail.value = itemId
-    }
-
     fun onItemDetailNavigated() {
         _navigateToItemDetail.value = null
     }

@@ -1,4 +1,4 @@
-package com.example.animalcrossinghandbook.ui.adapters
+package com.example.animalcrossinghandbook.adapters
 
 import com.chad.library.adapter.base.BaseNodeAdapter
 import com.chad.library.adapter.base.entity.node.BaseNode

@@ -33,34 +33,33 @@ class BugsViewModel(
     private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
     // data
-    val items = database.getAll()
+    val items: LiveData<List<Bug>>
+        get() = _items
+    private var _items = MediatorLiveData<List<Bug>>()
+
 
     init {
-        initializeBugsData()
-    }
+        _items.addSource(database.getAll(), _items::setValue)
 
-    private fun initializeBugsData() {
-        uiScope.launch {
-            // update bugs data to display filtered
-            //items.value = getAllBugsFromDatabase()
-        }
+        //_items = database.getAll().value
     }
 
 
+    /**
+     * Toggle switch to mark an item in/out museum
+     */
+    fun itemToggleInMuseum(position: Int): Bug? {
+        val item = _items.value?.get(position)?.apply { in_museum = !in_museum }
+        Timber.i("$item")
 
+        return item
+    }
 
 
     /**
      * encapsulated live data changes when navigating
      */
     private val _navigateToItemDetail = MutableLiveData<Int>()
-
-    val navigateToItemDetail
-        get() = _navigateToItemDetail
-
-    fun onItemClicked(itemId: Int) {
-        _navigateToItemDetail.value = itemId
-    }
 
     fun onItemDetailNavigated() {
         _navigateToItemDetail.value = null

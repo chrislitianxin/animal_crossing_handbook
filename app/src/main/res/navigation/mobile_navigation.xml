@@ -7,13 +7,13 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.example.animalcrossinghandbook.ui.fragments.HomeFragment"
+        android:name="com.example.animalcrossinghandbook.workers.HomeFragment"
         android:label="@string/title_home"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_explore"
-        android:name="com.example.animalcrossinghandbook.ui.fragments.ExploreFragment"
+        android:name="com.example.animalcrossinghandbook.workers.ExploreFragment"
         android:label="@string/title_explore"
         tools:layout="@layout/fragment_explore">
         <action
@@ -26,14 +26,14 @@
 
     <fragment
         android:id="@+id/navigation_notifications"
-        android:name="com.example.animalcrossinghandbook.ui.fragments.NotificationsFragment"
+        android:name="com.example.animalcrossinghandbook.workers.NotificationsFragment"
         android:label="@string/title_notifications"
         tools:layout="@layout/fragment_notifications" />
 
     <!-- BUGS -->
     <fragment
         android:id="@+id/bugsFragment"
-        android:name="com.example.animalcrossinghandbook.ui.fragments.BugsFragment"
+        android:name="com.example.animalcrossinghandbook.workers.BugsFragment"
         android:label="BugsFragment">
         <action
             android:id="@+id/action_bugsFragment_to_bugDetailFragment"
@@ -42,7 +42,7 @@
     </fragment>
     <fragment
         android:id="@+id/bugDetailFragment"
-        android:name="com.example.animalcrossinghandbook.ui.fragments.BugDetailFragment"
+        android:name="com.example.animalcrossinghandbook.workers.BugDetailFragment"
         android:label="BugDetailFragment">
         <argument
             android:name="itemId"
@@ -55,7 +55,7 @@
     <!-- VILLAGERS -->
     <fragment
         android:id="@+id/villagersFragment"
-        android:name="com.example.animalcrossinghandbook.ui.fragments.VillagersFragment"
+        android:name="com.example.animalcrossinghandbook.workers.VillagersFragment"
         android:label="VillagersFragment">
         <action
             android:id="@+id/action_villagersFragment_to_villagerDetailFragment"
@@ -63,7 +63,7 @@
     </fragment>
     <fragment
         android:id="@+id/villagerDetailFragment"
-        android:name="com.example.animalcrossinghandbook.ui.fragments.VillagerDetailFragment"
+        android:name="com.example.animalcrossinghandbook.workers.VillagerDetailFragment"
         android:label="VillagerDetailFragment">
         <argument
             android:name="itemId"

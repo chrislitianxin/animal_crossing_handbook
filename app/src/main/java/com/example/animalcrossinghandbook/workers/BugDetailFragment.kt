@@ -1,4 +1,4 @@
-package com.example.animalcrossinghandbook.ui.fragments
+package com.example.animalcrossinghandbook.workers
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -56,6 +56,7 @@ class BugDetailFragment : Fragment() {
         binding.inMuseumToggle.setOnClickListener {
             bugDetailViewModel.toggleInMuseum()
         }
+
         // change button text based on whether it has been donated
         // TODO changed to Blather icon
         bugDetailViewModel.bug.observe(viewLifecycleOwner, Observer {
@@ -64,18 +65,6 @@ class BugDetailFragment : Fragment() {
                 false -> binding.inMuseumToggle.setText(R.string.donate)
             }
         })
-
-
-        //        // Add an Observer to the state variable for Navigating when a Quality icon is tapped.
-//        bugDetailViewModel.navigateToSleepTracker.observe(this, Observer {
-//            if (it == true) { // Observed state is true.
-//                this.findNavController().navigate(
-//                    BugDetailFragmentDirections.actionSleepDetailFragmentToSleepTrackerFragment())
-//                // Reset state to make sure we only navigate once, even if the device
-//                // has a configuration change.
-//                bugDetailViewModel.doneNavigating()
-//            }
-//        })
 
         return binding.root
 

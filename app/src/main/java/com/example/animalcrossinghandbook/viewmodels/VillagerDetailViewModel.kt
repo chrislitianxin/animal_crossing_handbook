@@ -34,6 +34,7 @@ class VillagerDetailViewModel(
     }
 
 
+
     // update  TODO implement resident
     private suspend fun update(villager: Villager) {
         withContext(Dispatchers.IO) {

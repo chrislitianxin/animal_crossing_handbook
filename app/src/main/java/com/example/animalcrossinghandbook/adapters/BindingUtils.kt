@@ -1,17 +1,16 @@
-package com.example.animalcrossinghandbook.util
+package com.example.animalcrossinghandbook.adapters
 
-import android.content.res.AssetManager
 import android.graphics.BitmapFactory
-import android.net.Uri
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.databinding.BindingAdapter
 import com.bumptech.glide.Glide
+import com.bumptech.glide.load.resource.drawable.DrawableTransitionOptions
 import com.example.animalcrossinghandbook.data.Bug
 import com.example.animalcrossinghandbook.data.Fish
 import com.example.animalcrossinghandbook.data.Villager
+import com.example.animalcrossinghandbook.util.IMAGE_BASE_PATH
 import java.io.IOException
-import java.io.InputStream
 
 
 /**
@@ -83,6 +82,20 @@ fun ImageView.setFishIcon(item: Fish?) {
     }
 }
 
+@BindingAdapter("fishImage")
+fun ImageView.setFishImage(item: Fish?) {
+    item?.let {
+        val fileUri = IMAGE_BASE_PATH + "/fish/${item.filename}.png"
+        try {
+            context.assets.open(fileUri).use {
+                setImageBitmap(BitmapFactory.decodeStream(it))
+            }
+        } catch (e: IOException) {
+            e.printStackTrace()
+        }
+    }
+}
+
 
 /**
  * Villager Binding Adapters
@@ -136,7 +149,9 @@ fun ImageView.setVillagerIcon(item: Villager?) {
 @BindingAdapter("villagerImage")
 fun ImageView.setVillagerImage(item: Villager?) {
     item?.let {
-        // TODO for some reason just couldn't get glide working.
+        // TODO
+        //  for some reason just couldn't get glide working.
+        //  Maybe there are more flexible ways to do this other than setImageBitmap
 //        val iconId: Int =
 //            context.resources.getIdentifier(item.filename, "drawable", context.packageName)
 //        val imgUri = "assets://img/villagers/${item.filename}.png"
@@ -146,15 +161,20 @@ fun ImageView.setVillagerImage(item: Villager?) {
 //            .error(iconId) // just load icon if error encountered
 //            .into(this)
 
-        val fileUri = "img/villagers/${item.filename}.png"
+        val fileUri = IMAGE_BASE_PATH + "/villagers/${item.filename}.png"
 
-        try {
-            context.assets.open(fileUri).use {
-                setImageBitmap(BitmapFactory.decodeStream(it))
-            }
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
+//        try {
+//            context.assets.open(fileUri).use {
+//                setImageBitmap(BitmapFactory.decodeStream(it))
+//            }
+//        } catch (e: IOException) {
+//            e.printStackTrace()
+//        }
+
+        Glide.with(this.context)
+            .load(fileUri)
+            .transition(DrawableTransitionOptions.withCrossFade())
+            .into(this)
     }
 }
 

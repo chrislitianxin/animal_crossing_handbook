@@ -4,6 +4,8 @@ import android.content.Context
 import androidx.room.Room
 import androidx.room.Database
 import androidx.room.RoomDatabase
+import com.example.animalcrossinghandbook.util.DATABASE_NAME
+import com.example.animalcrossinghandbook.util.DATABASE_PATH
 
 
 @Database(
@@ -28,7 +30,7 @@ abstract class AnimalCrossingDatabase : RoomDatabase() {
 
         @Volatile
         private var INSTANCE: AnimalCrossingDatabase? = null
-        private const val DATABASE_PATH = "database/ac_database.db"
+
 
         fun getInstance(context: Context): AnimalCrossingDatabase {
             synchronized(this) {
@@ -39,7 +41,7 @@ abstract class AnimalCrossingDatabase : RoomDatabase() {
                     instance = Room.databaseBuilder(
                         context.applicationContext,
                         AnimalCrossingDatabase::class.java,
-                        "animal_crossing_database"
+                        DATABASE_NAME
                     )
                         .createFromAsset(DATABASE_PATH)
                         .build()
