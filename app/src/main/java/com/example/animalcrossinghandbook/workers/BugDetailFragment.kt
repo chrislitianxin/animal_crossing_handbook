@@ -60,7 +60,7 @@ class BugDetailFragment : Fragment() {
         // change button text based on whether it has been donated
         // TODO changed to Blather icon
         bugDetailViewModel.bug.observe(viewLifecycleOwner, Observer {
-            when (it.in_museum) {
+            when (it.inMuseum) {
                 true -> binding.inMuseumToggle.setText(R.string.donated)
                 false -> binding.inMuseumToggle.setText(R.string.donate)
             }

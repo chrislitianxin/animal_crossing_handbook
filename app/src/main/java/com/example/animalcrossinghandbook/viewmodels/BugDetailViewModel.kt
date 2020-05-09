@@ -51,7 +51,7 @@ class BugDetailViewModel(
      */
     fun toggleInMuseum() {
         uiScope.launch {
-            _bug.value?.apply { in_museum = !in_museum }
+            _bug.value?.apply { inMuseum = !inMuseum }
             _bug.postValue(_bug.value) // force postValue to notify Observers
             _bug.value?.let { updateInMuseum(it) } // write to db
             val __bug = _bug.value
@@ -62,7 +62,7 @@ class BugDetailViewModel(
     // update database to reflect change in in_museum field
     private suspend fun updateInMuseum(bug: Bug) {
         withContext(Dispatchers.IO) {
-            database.updateInMuseum(bug.id, bug.in_museum)
+            database.updateInMuseum(bug.id, bug.inMuseum)
         }
     }
 

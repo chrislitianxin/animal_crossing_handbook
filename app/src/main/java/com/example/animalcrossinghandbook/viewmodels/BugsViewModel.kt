@@ -49,7 +49,7 @@ class BugsViewModel(
      * Toggle switch to mark an item in/out museum
      */
     fun itemToggleInMuseum(position: Int): Bug? {
-        val item = _items.value?.get(position)?.apply { in_museum = !in_museum }
+        val item = _items.value?.get(position)?.apply { inMuseum = !inMuseum }
         Timber.i("$item")
 
         return item
