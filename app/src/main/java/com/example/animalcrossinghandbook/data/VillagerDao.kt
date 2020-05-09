@@ -21,5 +21,7 @@ abstract class VillagerDao : BaseDao<Villager> {
     @Query("SELECT COUNT(id) FROM villagers")
     abstract fun count(): Int
 
+    @Query("SELECT isResident FROM villagers WHERE id = :villagerId")
+    abstract fun isResident(villagerId: Int): LiveData<Boolean>
 
 }

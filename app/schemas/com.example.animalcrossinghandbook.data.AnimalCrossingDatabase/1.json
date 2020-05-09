@@ -2,11 +2,11 @@
   "formatVersion": 1,
   "database": {
     "version": 1,
-    "identityHash": "df3384dad369c16745facc5ef5296169",
+    "identityHash": "5f39ea4371d98130f6fad1103578f874",
     "entities": [
       {
         "tableName": "bugs",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `price` INTEGER, `filename` TEXT, `in_museum` INTEGER NOT NULL, `time` TEXT, `month_northern` TEXT, `month_southern` TEXT, `location` TEXT, `rarity` TEXT, `is_all_day` INTEGER, `is_all_year` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `price` INTEGER, `filename` TEXT, `inMuseum` INTEGER NOT NULL, `time` TEXT, `monthNorthern` TEXT, `monthSouthern` TEXT, `location` TEXT, `rarity` TEXT, `isAllDay` INTEGER, `isAllYear` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -33,8 +33,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "in_museum",
-            "columnName": "in_museum",
+            "fieldPath": "inMuseum",
+            "columnName": "inMuseum",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -45,14 +45,14 @@
             "notNull": false
           },
           {
-            "fieldPath": "availability.month_northern",
-            "columnName": "month_northern",
+            "fieldPath": "availability.monthNorthern",
+            "columnName": "monthNorthern",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "availability.month_southern",
-            "columnName": "month_southern",
+            "fieldPath": "availability.monthSouthern",
+            "columnName": "monthSouthern",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -69,14 +69,14 @@
             "notNull": false
           },
           {
-            "fieldPath": "availability.is_all_day",
-            "columnName": "is_all_day",
+            "fieldPath": "availability.isAllDay",
+            "columnName": "isAllDay",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "availability.is_all_year",
-            "columnName": "is_all_year",
+            "fieldPath": "availability.isAllYear",
+            "columnName": "isAllYear",
             "affinity": "INTEGER",
             "notNull": false
           }
@@ -92,7 +92,7 @@
       },
       {
         "tableName": "fish",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `shadow` TEXT, `price` INTEGER, `filename` TEXT, `in_museum` INTEGER NOT NULL, `time` TEXT, `month_northern` TEXT, `month_southern` TEXT, `location` TEXT, `rarity` TEXT, `is_all_day` INTEGER, `is_all_year` INTEGER)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `shadow` TEXT, `price` INTEGER, `filename` TEXT, `inMuseum` INTEGER NOT NULL, `time` TEXT, `monthNorthern` TEXT, `monthSouthern` TEXT, `location` TEXT, `rarity` TEXT, `isAllDay` INTEGER, `isAllYear` INTEGER)",
         "fields": [
           {
             "fieldPath": "id",
@@ -125,8 +125,8 @@
             "notNull": false
           },
           {
-            "fieldPath": "in_museum",
-            "columnName": "in_museum",
+            "fieldPath": "inMuseum",
+            "columnName": "inMuseum",
             "affinity": "INTEGER",
             "notNull": true
           },
@@ -137,14 +137,14 @@
             "notNull": false
           },
           {
-            "fieldPath": "availability.month_northern",
-            "columnName": "month_northern",
+            "fieldPath": "availability.monthNorthern",
+            "columnName": "monthNorthern",
             "affinity": "TEXT",
             "notNull": false
           },
           {
-            "fieldPath": "availability.month_southern",
-            "columnName": "month_southern",
+            "fieldPath": "availability.monthSouthern",
+            "columnName": "monthSouthern",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -161,14 +161,14 @@
             "notNull": false
           },
           {
-            "fieldPath": "availability.is_all_day",
-            "columnName": "is_all_day",
+            "fieldPath": "availability.isAllDay",
+            "columnName": "isAllDay",
             "affinity": "INTEGER",
             "notNull": false
           },
           {
-            "fieldPath": "availability.is_all_year",
-            "columnName": "is_all_year",
+            "fieldPath": "availability.isAllYear",
+            "columnName": "isAllYear",
             "affinity": "INTEGER",
             "notNull": false
           }
@@ -184,7 +184,7 @@
       },
       {
         "tableName": "villagers",
-        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `gender` TEXT NOT NULL, `personality` TEXT NOT NULL, `birthday` TEXT NOT NULL, `species` TEXT NOT NULL, `catch_phrase` TEXT, `filename` TEXT NOT NULL, `is_resident` INTEGER NOT NULL)",
+        "createSql": "CREATE TABLE IF NOT EXISTS `${TABLE_NAME}` (`id` INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, `name` TEXT NOT NULL, `gender` TEXT NOT NULL, `personality` TEXT NOT NULL, `birthday` TEXT NOT NULL, `species` TEXT NOT NULL, `catchPhrase` TEXT, `filename` TEXT NOT NULL, `isResident` INTEGER NOT NULL)",
         "fields": [
           {
             "fieldPath": "id",
@@ -223,8 +223,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "catch_phrase",
-            "columnName": "catch_phrase",
+            "fieldPath": "catchPhrase",
+            "columnName": "catchPhrase",
             "affinity": "TEXT",
             "notNull": false
           },
@@ -235,8 +235,8 @@
             "notNull": true
           },
           {
-            "fieldPath": "is_resident",
-            "columnName": "is_resident",
+            "fieldPath": "isResident",
+            "columnName": "isResident",
             "affinity": "INTEGER",
             "notNull": true
           }
@@ -254,7 +254,7 @@
     "views": [],
     "setupQueries": [
       "CREATE TABLE IF NOT EXISTS room_master_table (id INTEGER PRIMARY KEY,identity_hash TEXT)",
-      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, 'df3384dad369c16745facc5ef5296169')"
+      "INSERT OR REPLACE INTO room_master_table (id,identity_hash) VALUES(42, '5f39ea4371d98130f6fad1103578f874')"
     ]
   }
 }
