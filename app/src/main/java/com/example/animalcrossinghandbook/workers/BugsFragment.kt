@@ -5,6 +5,7 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -15,24 +16,17 @@ import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
 import com.example.animalcrossinghandbook.data.Bug
 import com.example.animalcrossinghandbook.databinding.FragmentListBugsBinding
 import com.example.animalcrossinghandbook.adapters.ListItemAdapter
+import com.example.animalcrossinghandbook.util.InjectorUtils
 import com.example.animalcrossinghandbook.viewmodelfactorys.BugsViewModelFactory
 import com.example.animalcrossinghandbook.viewmodels.BugsViewModel
 
-/**
- *
- */
+
 class BugsFragment : Fragment() {
-    /**
-     * This fragment could totally be shared by fish and bug to be
-     * CrittersFragment with just different data passed in
-     * That will be more convoluted, separating bugs and fish
-     * from each other so it can be easily extended in the future
-     *
-     * However, bug and fish fragment share the same layout res
-     */
 
     private val mAdapter = ListItemAdapter(R.layout.list_item_bug)
-
+    private val viewModel: BugsViewModel by viewModels {
+        InjectorUtils.provideBugsViewModelFactory(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,30 +35,20 @@ class BugsFragment : Fragment() {
 
     ): View? {
 
-        //passing database dao to ViewModel via ViewModelFactory
-        val application = requireNotNull(this.activity).application
-        val dataSource = AnimalCrossingDatabase.getInstance(application).bugDao()
-
-        val viewModelFactory = BugsViewModelFactory(dataSource, application)
-        val bugsViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(BugsViewModel::class.java)
-
         // Enable search in app bar
         setHasOptionsMenu(true)
-
 
         val binding = DataBindingUtil.inflate<FragmentListBugsBinding>(
             inflater, R.layout.fragment_list_bugs, container, false
         ).apply {
-            viewModel = bugsViewModel
+            viewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
             bugsList.adapter = mAdapter
             bugsList.layoutManager = GridLayoutManager(activity, 3)
 
         }
 
-
-        subscribeUi(bugsViewModel)
+        subscribeUi(viewModel)
 
         /**
          * Set card click navigation
@@ -74,7 +58,6 @@ class BugsFragment : Fragment() {
             findNavController().navigate(
                 BugsFragmentDirections.actionBugsFragmentToBugDetailFragment(bugId)
             )
-            bugsViewModel.onItemDetailNavigated()
         })
 
         /**
@@ -82,9 +65,9 @@ class BugsFragment : Fragment() {
          */
         mAdapter.setOnItemLongClickListener { _, _, position ->
             // notify data change
-            bugsViewModel.itemToggleInMuseum(position)?.let {
-                mAdapter.setData(position, it)
-            }
+            val bugId = (mAdapter.getItem(position) as Bug).id
+            viewModel.toggleInMuseumById(bugId)
+
             true
         }
 
@@ -98,7 +81,7 @@ class BugsFragment : Fragment() {
      */
     private fun subscribeUi(bugsViewModel: BugsViewModel) {
         //mAdapter.initList(bugsViewModel.items)
-        bugsViewModel.items.observe(viewLifecycleOwner, Observer {
+        viewModel.bugs.observe(viewLifecycleOwner, Observer {
             it?.let {
                 mAdapter.setList(it)
             }

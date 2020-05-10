@@ -1,25 +1,29 @@
 package com.example.animalcrossinghandbook.viewmodelfactorys
 
-import android.app.Application
+import android.os.Bundle
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.animalcrossinghandbook.data.BugDao
+import androidx.savedstate.SavedStateRegistryOwner
+import com.example.animalcrossinghandbook.data.BugRepository
 import com.example.animalcrossinghandbook.viewmodels.BugsViewModel
 
-/* Boiler code pretty much */
-
+/**
+ * Factory for creating a [BugsViewModel] with a constructor that
+ * takes a [BugRepository].
+ */
 class BugsViewModelFactory(
-    private val dataSource: BugDao,
-    private val application: Application
-) : ViewModelProvider.Factory {
+    private val repository: BugRepository,
+    owner: SavedStateRegistryOwner,
+    defaultArgs: Bundle? = null
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
     @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(BugsViewModel::class.java)) {
-            return BugsViewModel(
-                dataSource, application
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    override fun <T : ViewModel?> create(
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
+    ): T {
+        return BugsViewModel(repository, handle) as T
     }
 }
