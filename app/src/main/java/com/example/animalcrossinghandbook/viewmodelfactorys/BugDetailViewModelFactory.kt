@@ -2,21 +2,23 @@ package com.example.animalcrossinghandbook.viewmodelfactorys
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
-import com.example.animalcrossinghandbook.data.BugDao
+import com.example.animalcrossinghandbook.data.BugRepository
 import com.example.animalcrossinghandbook.viewmodels.BugDetailViewModel
 
 /**
- * This is pretty much boiler plate code for a ViewModel Factory.
- *
+ * Factory for creating a [BugDetailViewModel] with a constructor that takes a [BugRepository]
+ * and an ID for the current [Bug].
  */
+
 class BugDetailViewModelFactory(
-    private val bugId: Int,
-    private val dataSource: BugDao
+    private val bugRepository: BugRepository,
+    private val bugId: Int
 ) : ViewModelProvider.Factory {
+
     @Suppress("unchecked_cast")
     override fun <T : ViewModel?> create(modelClass: Class<T>): T {
         if (modelClass.isAssignableFrom(BugDetailViewModel::class.java)) {
-            return BugDetailViewModel(bugId, dataSource) as T
+            return BugDetailViewModel(bugRepository, bugId) as T
         }
         throw IllegalArgumentException("Unknown ViewModel class")
     }

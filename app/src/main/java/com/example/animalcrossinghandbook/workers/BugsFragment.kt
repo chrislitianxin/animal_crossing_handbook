@@ -49,27 +49,20 @@ class BugsFragment : Fragment() {
         val bugsViewModel =
             ViewModelProviders.of(this, viewModelFactory).get(BugsViewModel::class.java)
 
-
         // Enable search in app bar
         setHasOptionsMenu(true)
 
-        val binding: FragmentListBugsBinding = DataBindingUtil.inflate(
+
+        val binding = DataBindingUtil.inflate<FragmentListBugsBinding>(
             inflater, R.layout.fragment_list_bugs, container, false
-        )
+        ).apply {
+            viewModel = bugsViewModel
+            lifecycleOwner = viewLifecycleOwner
+            bugsList.adapter = mAdapter
+            bugsList.layoutManager = GridLayoutManager(activity, 3)
 
-        //Grid layout
-        val manager = GridLayoutManager(activity, 3)
-        binding.bugsList.layoutManager = manager
+        }
 
-        //Data binding for ViewModel
-        binding.lifecycleOwner = this
-
-        // see fragment_list_bugs.xml
-        binding.bugsViewModel = bugsViewModel
-
-        // set and attach adapter
-        binding.bugsList.adapter = mAdapter
-        mAdapter.animationEnable = true
 
         subscribeUi(bugsViewModel)
 

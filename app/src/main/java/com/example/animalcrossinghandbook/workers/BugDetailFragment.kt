@@ -6,11 +6,14 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.navArgs
 import com.example.animalcrossinghandbook.R
 import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
 import com.example.animalcrossinghandbook.databinding.FragmentBugDetailBinding
+import com.example.animalcrossinghandbook.util.InjectorUtils
 import com.example.animalcrossinghandbook.viewmodelfactorys.BugDetailViewModelFactory
 import com.example.animalcrossinghandbook.viewmodels.BugDetailViewModel
 
@@ -20,49 +23,45 @@ import com.example.animalcrossinghandbook.viewmodels.BugDetailViewModel
  */
 class BugDetailFragment : Fragment() {
 
+    private val args: BugDetailFragmentArgs by navArgs()
+
+    private val bugDetailViewModel: BugDetailViewModel by viewModels {
+        InjectorUtils.provideBugDetailViewModelFactory(requireActivity(), args.bugId)
+    }
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        val binding: FragmentBugDetailBinding = DataBindingUtil.inflate(
+        val binding = DataBindingUtil.inflate<FragmentBugDetailBinding>(
             inflater, R.layout.fragment_bug_detail, container, false
-        )
+        ).apply {
+            viewModel = bugDetailViewModel
+            lifecycleOwner = viewLifecycleOwner
+            callback = object : Callback {
+                override fun toggleInMuseum(bugId: Int) {
+                    bugDetailViewModel.toggleInMuseum()
+                }
+            }
 
-        val application = requireNotNull(this.activity).application
+            /**
+             * Set in_museum toggle switch
+             */
+            inMuseumToggle.setOnClickListener {
+                bugDetailViewModel.toggleInMuseum()
+            }
 
-        val arguments = BugDetailFragmentArgs.fromBundle(requireArguments())
-
-        // Create an instance of the ViewModel Factory.
-        val dataSource = AnimalCrossingDatabase.getInstance(application).bugDao()
-        val viewModelFactory = BugDetailViewModelFactory(arguments.itemId, dataSource)
-
-        // Get a reference to the ViewModel associated with this fragment.
-        val bugDetailViewModel =
-            ViewModelProviders.of(
-                this, viewModelFactory
-            ).get(BugDetailViewModel::class.java)
-
-        // To use the View Model with data binding, you have to explicitly
-        // give the binding object a reference to it.
-        binding.bugDetailViewModel = bugDetailViewModel
-
-        binding.lifecycleOwner = this
-
-
-        /**
-         * Set in_museum toggle switch
-         */
-        binding.inMuseumToggle.setOnClickListener {
-            bugDetailViewModel.toggleInMuseum()
         }
 
+
         // change button text based on whether it has been donated
-        // TODO changed to Blather icon
-        bugDetailViewModel.bug.observe(viewLifecycleOwner, Observer {
-            when (it.inMuseum) {
+        // TODO changed to show/hide Blather icon
+        bugDetailViewModel.isInMuseum.observe(viewLifecycleOwner, Observer {
+            when (it) {
                 true -> binding.inMuseumToggle.setText(R.string.donated)
-                false -> binding.inMuseumToggle.setText(R.string.donate)
+                else -> binding.inMuseumToggle.setText(R.string.donate)
             }
         })
 
@@ -70,4 +69,8 @@ class BugDetailFragment : Fragment() {
 
     }
 
+
+    interface Callback {
+        fun toggleInMuseum(bugId: Int)
+    }
 }

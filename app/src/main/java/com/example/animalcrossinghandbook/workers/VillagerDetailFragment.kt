@@ -34,7 +34,7 @@ class VillagerDetailFragment : Fragment() {
 
         // Create an instance of the ViewModel Factory.
         val dataSource = AnimalCrossingDatabase.getInstance(application).villagerDao()
-        val viewModelFactory = VillagerDetailViewModelFactory(arguments.itemId, dataSource)
+        val viewModelFactory = VillagerDetailViewModelFactory(arguments.villagerId, dataSource)
 
         // Get a reference to the ViewModel associated with this fragment.
         val villagerDetailViewModel =

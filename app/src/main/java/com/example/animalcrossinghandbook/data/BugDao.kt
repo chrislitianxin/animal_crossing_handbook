@@ -17,24 +17,20 @@ abstract class BugDao : BaseDao<Bug> {
     @Query("SELECT * FROM bugs")
     abstract fun getAll(): LiveData<List<Bug>>
 
-    @Query("SELECT * FROM bugs WHERE id = :id")
-    abstract fun getById(id: Int): LiveData<Bug>
-
-    @Query("SELECT * FROM bugs WHERE name = :name")
-    abstract fun getByName(name: String): LiveData<Bug>
-
     @Query("DELETE FROM bugs")
     abstract fun clearAll()
 
     @Query("SELECT COUNT(id) FROM bugs")
     abstract fun count(): Int
 
-    @Query("UPDATE bugs SET inMuseum = :inMuseum WHERE id = :id")
-    abstract fun updateInMuseum(id: Int, inMuseum: Boolean)
+    @Query("SELECT * FROM bugs WHERE id = :id")
+    abstract fun getById(id: Int): LiveData<Bug>
 
     @Query("SELECT inMuseum FROM bugs WHERE id = :bugId")
     abstract fun isInMuseum(bugId: Int): LiveData<Boolean>
 
+    @Query("UPDATE bugs SET inMuseum = (inMuseum | 1) - (inMuseum & 1) WHERE id = :bugId")
+    abstract suspend fun toggleInMuseum(bugId: Int)
 
 //    @Query("SELECT id, name, price, location, filename FROM bugs")
 //    abstract fun getBugMinimal(): LiveData<BugMinimal>

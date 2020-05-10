@@ -7,8 +7,12 @@
     <data>
 
         <variable
-            name="bugDetailViewModel"
+            name="viewModel"
             type="com.example.animalcrossinghandbook.viewmodels.BugDetailViewModel" />
+
+        <variable
+            name="callback"
+            type="com.example.animalcrossinghandbook.workers.BugDetailFragment.Callback" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,7 +25,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="Bug Image"
-            app:bugImage="@{bugDetailViewModel.bug}"
+            app:bugImage="@{viewModel.bug.filename}"
             app:layout_constraintBottom_toTopOf="@+id/bug_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -33,7 +37,7 @@
             android:id="@+id/bug_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:bugName="@{bugDetailViewModel.bug}"
+            android:text="@{viewModel.bug.name}"
             app:layout_constraintBottom_toTopOf="@+id/bug_price"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -45,7 +49,7 @@
             android:id="@+id/bug_price"
             android:layout_width="17dp"
             android:layout_height="16dp"
-            app:bugPrice="@{bugDetailViewModel.bug}"
+            app:bugPrice="@{viewModel.bug.price}"
             app:layout_constraintBottom_toTopOf="@+id/in_museum_toggle"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -56,7 +60,7 @@
             android:id="@+id/in_museum_toggle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="@{bugDetailViewModel.toggleInMuseumButtonText}"
+            android:onClick="@{() -> callback.toggleInMuseum(viewModel.bug.id)}"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"

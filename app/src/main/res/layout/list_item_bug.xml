@@ -42,7 +42,7 @@
                     android:layout_width="100dp"
                     android:layout_height="100dp"
                     android:contentDescription="@+id/bug_name"
-                    app:bugIcon="@{bug}"
+                    app:bugIcon="@{bug.filename}"
                     tools:srcCompat="@drawable/firefly" />
 
                 <LinearLayout
@@ -56,8 +56,8 @@
                         android:id="@+id/bug_name"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:text="@{bug.name}"
                         android:textAppearance="?attr/textAppearanceHeadline6"
-                        app:bugName="@{bug}"
                         tools:text="Firefly" />
 
                     <TextView
@@ -67,39 +67,20 @@
                         android:layout_marginTop="8dp"
                         android:textAppearance="?attr/textAppearanceBody2"
                         android:textColor="?android:attr/textColorSecondary"
-                        app:bugPrice="@{bug}"
+                        app:bugPrice="@{bug.price}"
                         tools:text="500" />
 
                     <TextView
-                        android:layout_width="wrap_content"
+                        android:id="@+id/bug_location"
+                        android:layout_width="18dp"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
+                        android:text="@{bug.availability.location}"
                         android:textAppearance="?attr/textAppearanceBody2"
-                        android:textColor="?android:attr/textColorSecondary" />
+                        android:textColor="?android:attr/textColorSecondary"
+                        tools:text="On the rock" />
 
                 </LinearLayout>
-
-                <!-- Buttons
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_margin="8dp"
-                    android:orientation="horizontal">
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginEnd="8dp"
-                        android:text="@string/action_1"
-                        style="?attr/borderlessButtonStyle"
-                        />
-                    <com.google.android.material.button.MaterialButton
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="@string/action_2"
-                        style="?attr/borderlessButtonStyle"
-                        />
-                </LinearLayout>
-                -->
 
             </LinearLayout>
 

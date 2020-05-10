@@ -1,81 +1,33 @@
 package com.example.animalcrossinghandbook.viewmodels
 
 import androidx.lifecycle.*
-import com.example.animalcrossinghandbook.data.Bug
-import com.example.animalcrossinghandbook.data.BugDao
+import com.example.animalcrossinghandbook.data.BugRepository
 import kotlinx.coroutines.*
-import timber.log.Timber
 
+/**
+ * The ViewModel used in [BugDetailFragment].
+ */
 class BugDetailViewModel(
-    id: Int = 0,
-    dataSource: BugDao
+    private val repo: BugRepository,
+    private val bugId: Int = 0
+
 ) : ViewModel() {
     /**
-     * TODO should refactor this to use repository for data access, using mediator live data is a workaround
-     * reference https://stackoverflow.com/questions/49602606/how-can-we-assign-livedata-from-room-to-mutablelivedata-within-viewmodel
+     * refactored this to use repository for data access
      */
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
-    val database = dataSource
-    val toggleInMuseumButtonText = "HAHA button"
-    // reference to db
-    //val bug = database.getById(id)
-    val bug: LiveData<Bug>
-        get() = _bug
 
-    //private val _bug = MediatorLiveData<Bug>()
-    // needed this to avoid cannot find symbol error
-    private var _bug = MutableLiveData<Bug>()
+    val isInMuseum = repo.isInMuseum(bugId)
 
-    init {
-        //_bug.addSource(database.getById(id), _bug::setValue)
-        initializeDetailData(id)
-    }
+    val bug = repo.getBug(bugId)
 
-    private fun initializeDetailData(id: Int) {
-        uiScope.launch {
-            _bug.value = getBugDetail(id)
-        }
-    }
-
-    private suspend fun getBugDetail(id: Int): Bug? {
-        return withContext(Dispatchers.IO) {
-            var bug = database.getById(id)
-
-            bug.value
-        }
-    }
 
     /**
      * Toggle switch to mark an item in/out museum
      */
     fun toggleInMuseum() {
-        uiScope.launch {
-            _bug.value?.apply { inMuseum = !inMuseum }
-            _bug.postValue(_bug.value) // force postValue to notify Observers
-            _bug.value?.let { updateInMuseum(it) } // write to db
-            val __bug = _bug.value
-            Timber.i("$__bug")
+        viewModelScope.launch {
+            repo.toggleInMuseum(bugId)
         }
     }
-
-    // update database to reflect change in in_museum field
-    private suspend fun updateInMuseum(bug: Bug) {
-        withContext(Dispatchers.IO) {
-            database.updateInMuseum(bug.id, bug.inMuseum)
-        }
-    }
-
-    private suspend fun update(bug: Bug) {
-        withContext(Dispatchers.IO) {
-            database.update(bug)
-        }
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
-    }
-
 
 }

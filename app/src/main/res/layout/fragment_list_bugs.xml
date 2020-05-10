@@ -5,7 +5,7 @@
 
     <data>
         <variable
-            name="bugsViewModel"
+            name="viewModel"
             type="com.example.animalcrossinghandbook.viewmodels.BugsViewModel" />
     </data>
 
