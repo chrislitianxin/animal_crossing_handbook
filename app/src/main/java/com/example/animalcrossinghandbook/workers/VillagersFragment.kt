@@ -5,6 +5,7 @@ import android.view.*
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
@@ -15,17 +16,18 @@ import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
 import com.example.animalcrossinghandbook.data.Villager
 import com.example.animalcrossinghandbook.databinding.FragmentListVillagersBinding
 import com.example.animalcrossinghandbook.adapters.ListItemAdapter
+import com.example.animalcrossinghandbook.util.InjectorUtils
 import com.example.animalcrossinghandbook.viewmodelfactorys.VillagersViewModelFactory
 import com.example.animalcrossinghandbook.viewmodels.VillagersViewModel
 
 
 class VillagersFragment : Fragment() {
-    /**
-     *
-     */
+
 
     private val mAdapter = ListItemAdapter(R.layout.list_item_villager)
-
+    private val viewModel: VillagersViewModel by viewModels {
+        InjectorUtils.provideVillagersViewModelFactory(this)
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,48 +36,33 @@ class VillagersFragment : Fragment() {
 
     ): View? {
 
-        //passing database dao to ViewModel via ViewModelFactory
-        val application = requireNotNull(this.activity).application
-        val dataSource = AnimalCrossingDatabase.getInstance(application).villagerDao()
-
-        val viewModelFactory = VillagersViewModelFactory(dataSource, application)
-        val villagersViewModel =
-            ViewModelProviders.of(this, viewModelFactory).get(VillagersViewModel::class.java)
-
-
         // Enable search in app bar
         setHasOptionsMenu(true)
 
-        val binding: FragmentListVillagersBinding = DataBindingUtil.inflate(
+        val binding = DataBindingUtil.inflate<FragmentListVillagersBinding>(
             inflater, R.layout.fragment_list_villagers, container, false
-        )
+        ).apply {
+            viewModel = viewModel
+            lifecycleOwner = viewLifecycleOwner
+            villagersList.adapter = mAdapter
+            villagersList.layoutManager = LinearLayoutManager(activity)
+        }
 
-        //Grid layout
-        val manager = LinearLayoutManager(activity)
-        binding.villagersList.layoutManager = manager
 
-        //Data binding for ViewModel
-        binding.lifecycleOwner = this
-
-        // see fragment_list_bugs.xml
-        binding.villagersViewModel = villagersViewModel
-
-        // set and attach adapter
-        binding.villagersList.adapter = mAdapter
-        mAdapter.animationEnable = true
-
-        subscribeUi(villagersViewModel)
+        subscribeUI()
 
         /**
          * Set card click navigation
          */
         mAdapter.setOnItemClickListener(OnItemClickListener { adapter, _, position ->
-            val id: Int = (adapter.getItem(position) as Villager).id
+            val villagerId: Int = (adapter.getItem(position) as Villager).id
             findNavController().navigate(
-                VillagersFragmentDirections.actionVillagersFragmentToVillagerDetailFragment(id)
+                VillagersFragmentDirections.actionVillagersFragmentToVillagerDetailFragment(
+                    villagerId
+                )
             )
-            villagersViewModel.onItemDetailNavigated()
         })
+
 
         return binding.root
     }
@@ -84,9 +71,8 @@ class VillagersFragment : Fragment() {
     /**
      * Subscribe data to UI
      */
-    private fun subscribeUi(viewModel: VillagersViewModel) {
-        //mAdapter.initList(bugsViewModel.items)
-        viewModel.items.observe(viewLifecycleOwner, Observer {
+    private fun subscribeUI() {
+        viewModel.villagers.observe(viewLifecycleOwner, Observer {
             it?.let {
                 mAdapter.setList(it)
             }

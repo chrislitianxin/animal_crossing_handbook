@@ -4,55 +4,28 @@ import android.app.Application
 import androidx.lifecycle.*
 import com.example.animalcrossinghandbook.data.Villager
 import com.example.animalcrossinghandbook.data.VillagerDao
+import com.example.animalcrossinghandbook.data.VillagerRepository
 import kotlinx.coroutines.*
 
 /**
- * @param database
- * @param application
+ * The ViewModel for [VillagersFragment].
  */
 class VillagersViewModel(
-    val database: VillagerDao,
-    application: Application
-) : AndroidViewModel(application) {
+    private val repo: VillagerRepository,
+    private val savedStateHandle: SavedStateHandle
 
-    private var viewModelJob = Job()
-    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
+) : ViewModel() {
 
-    // data
-    val items = database.getAll()
-
-    init {
-
-    }
+    val villagers: LiveData<List<Villager>> = repo.getAll()
 
 
-    // update  TODO implement resident
-    private suspend fun update(villager: Villager) {
-        withContext(Dispatchers.IO) {
-            database.update(villager)
+    /**
+     * Toggle switch to mark residents of island
+     */
+    fun toggleIsResidentById(villagerId: Int) {
+        viewModelScope.launch {
+            repo.toggleIsResident(villagerId)
         }
-    }
-
-
-    /**
-     * encapsulated live data changes when navigating
-     */
-    private val _navigateToItemDetail = MutableLiveData<Int>()
-
-    fun onItemDetailNavigated() {
-        _navigateToItemDetail.value = null
-    }
-
-
-    /**
-     * Called when the ViewModel is dismantled.
-     * At this point, we want to cancel all coroutines;
-     * otherwise we end up with processes that have nowhere to return to
-     * using memory and resources.
-     */
-    override fun onCleared() {
-        super.onCleared()
-        viewModelJob.cancel()
     }
 
 

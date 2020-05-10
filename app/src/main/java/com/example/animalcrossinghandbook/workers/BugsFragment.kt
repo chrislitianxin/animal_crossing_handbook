@@ -48,7 +48,7 @@ class BugsFragment : Fragment() {
 
         }
 
-        subscribeUi(viewModel)
+        subscribeUI()
 
         /**
          * Set card click navigation
@@ -79,8 +79,7 @@ class BugsFragment : Fragment() {
     /**
      * Subscribe data to UI
      */
-    private fun subscribeUi(bugsViewModel: BugsViewModel) {
-        //mAdapter.initList(bugsViewModel.items)
+    private fun subscribeUI() {
         viewModel.bugs.observe(viewLifecycleOwner, Observer {
             it?.let {
                 mAdapter.setList(it)

@@ -7,8 +7,12 @@
     <data>
 
         <variable
-            name="villagerDetailViewModel"
+            name="viewModel"
             type="com.example.animalcrossinghandbook.viewmodels.VillagerDetailViewModel" />
+
+        <variable
+            name="callback"
+            type="com.example.animalcrossinghandbook.workers.VillagerDetailFragment.Callback" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -21,19 +25,19 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="Villager Image"
-            app:villagerImage="@{villagerDetailViewModel.villager}"
             app:layout_constraintBottom_toTopOf="@+id/villager_name"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
+            app:villagerImage="@{viewModel.villager.filename}"
             tools:srcCompat="@drawable/ant01" />
 
         <TextView
             android:id="@+id/villager_name"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:villagerName="@{villagerDetailViewModel.villager}"
+            android:text="@{viewModel.villager.name}"
             app:layout_constraintBottom_toTopOf="@+id/villager_personality"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.5"
@@ -45,12 +49,34 @@
             android:id="@+id/villager_personality"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            app:villagerPersonality="@{villagerDetailViewModel.villager}"
-            app:layout_constraintBottom_toBottomOf="parent"
+            android:text="@{viewModel.villager.personality}"
+            app:layout_constraintBottom_toTopOf="@+id/villager_catch_phrase"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@+id/villager_name"
             tools:text="Sisterly" />
+
+        <TextView
+            android:id="@+id/villager_catch_phrase"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.villager.catchPhrase}"
+            app:layout_constraintBottom_toTopOf="@+id/is_resident_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/villager_personality"
+            tools:text="Hahaha" />
+
+        <Button
+            android:id="@+id/is_resident_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> callback.toggleIsResident(viewModel.villager.id)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/villager_catch_phrase" />
+
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

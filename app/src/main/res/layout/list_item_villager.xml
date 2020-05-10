@@ -28,7 +28,7 @@
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:villagerIcon="@{villager}"
+            app:villagerIcon="@{villager.filename}"
             tools:srcCompat="@drawable/ant00" />
 
         <TextView
@@ -40,14 +40,15 @@
             android:layout_marginTop="8dp"
             android:layout_marginEnd="16dp"
             android:layout_marginRight="16dp"
+            android:text="@{villager.name}"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/villager_image"
             app:layout_constraintTop_toTopOf="@+id/villager_image"
-            app:villagerName="@{villager}"
             tools:text="Ant00" />
 
         <TextView
             android:id="@+id/villager_species"
+            android:text="@{villager.species}"
             android:layout_width="0dp"
             android:layout_height="20dp"
             android:layout_marginTop="8dp"
@@ -55,7 +56,6 @@
             app:layout_constraintHorizontal_bias="0.0"
             app:layout_constraintStart_toStartOf="@+id/villager_name"
             app:layout_constraintTop_toBottomOf="@+id/villager_name"
-            app:villagerSpecies="@{villager}"
             tools:text="Ant" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>

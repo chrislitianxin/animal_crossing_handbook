@@ -8,6 +8,12 @@ class VillagerRepository private constructor(
 
     fun getVillager(id: Int) = villagerDao.getById(id)
 
+    fun isResident(id: Int) = villagerDao.isResident(id)
+
+    suspend fun toggleIsResident(id: Int) {
+        villagerDao.toggleIsResident(id)
+    }
+
 
     companion object {
         // For Singleton instantiation
