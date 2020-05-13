@@ -12,13 +12,13 @@
 
         <variable
             name="callback"
-            type="com.example.animalcrossinghandbook.workers.FishDetailFragment.Callback" />
+            type="com.example.animalcrossinghandbook.fragments.FishDetailFragment.Callback" />
     </data>
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".workers.FishDetailFragment">
+        tools:context=".fragments.FishDetailFragment">
 
         <ImageView
             android:id="@+id/fish_image"

@@ -1,4 +1,4 @@
-package com.example.animalcrossinghandbook.workers
+package com.example.animalcrossinghandbook.fragments
 
 import android.os.Bundle
 import android.view.*
@@ -7,26 +7,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.GridLayoutManager
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.example.animalcrossinghandbook.R
-import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
-import com.example.animalcrossinghandbook.data.Villager
-import com.example.animalcrossinghandbook.databinding.FragmentListVillagersBinding
 import com.example.animalcrossinghandbook.adapters.ListItemAdapter
+import com.example.animalcrossinghandbook.data.Fish
+import com.example.animalcrossinghandbook.databinding.FragmentListFishBinding
 import com.example.animalcrossinghandbook.util.InjectorUtils
-import com.example.animalcrossinghandbook.viewmodelfactorys.VillagersViewModelFactory
-import com.example.animalcrossinghandbook.viewmodels.VillagersViewModel
+import com.example.animalcrossinghandbook.viewmodels.FishViewModel
 
 
-class VillagersFragment : Fragment() {
+class FishFragment : Fragment() {
 
-
-    private val mAdapter = ListItemAdapter(R.layout.list_item_villager)
-    private val viewModel: VillagersViewModel by viewModels {
-        InjectorUtils.provideVillagersViewModelFactory(this)
+    private val mAdapter = ListItemAdapter(R.layout.list_item_fish)
+    private val viewModel: FishViewModel by viewModels {
+        InjectorUtils.provideFishViewModelFactory(this)
     }
 
     override fun onCreateView(
@@ -39,15 +35,15 @@ class VillagersFragment : Fragment() {
         // Enable search in app bar
         setHasOptionsMenu(true)
 
-        val binding = DataBindingUtil.inflate<FragmentListVillagersBinding>(
-            inflater, R.layout.fragment_list_villagers, container, false
+        val binding = DataBindingUtil.inflate<FragmentListFishBinding>(
+            inflater, R.layout.fragment_list_fish, container, false
         ).apply {
             viewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
-            villagersList.adapter = mAdapter
-            villagersList.layoutManager = LinearLayoutManager(activity)
-        }
+            fishList.adapter = mAdapter
+            fishList.layoutManager = GridLayoutManager(activity, 3)
 
+        }
 
         subscribeUI()
 
@@ -55,13 +51,22 @@ class VillagersFragment : Fragment() {
          * Set card click navigation
          */
         mAdapter.setOnItemClickListener(OnItemClickListener { adapter, _, position ->
-            val villagerId: Int = (adapter.getItem(position) as Villager).id
+            val fishId = (adapter.getItem(position) as Fish).id
             findNavController().navigate(
-                VillagersFragmentDirections.actionVillagersFragmentToVillagerDetailFragment(
-                    villagerId
-                )
+                FishFragmentDirections.actionFishFragmentToFishDetailFragment(fishId)
             )
         })
+
+        /**
+         * Set long click in_museum toggle switch
+         */
+        mAdapter.setOnItemLongClickListener { _, _, position ->
+            // notify data change
+            val fishId = (mAdapter.getItem(position) as Fish).id
+            viewModel.toggleInMuseumById(fishId)
+
+            true
+        }
 
 
         return binding.root
@@ -72,13 +77,16 @@ class VillagersFragment : Fragment() {
      * Subscribe data to UI
      */
     private fun subscribeUI() {
-        viewModel.villagers.observe(viewLifecycleOwner, Observer {
+        viewModel.fish.observe(viewLifecycleOwner, Observer {
             it?.let {
                 mAdapter.setList(it)
             }
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_list, menu)
+    }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)

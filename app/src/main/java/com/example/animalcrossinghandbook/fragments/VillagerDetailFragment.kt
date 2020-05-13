@@ -1,9 +1,7 @@
-package com.example.animalcrossinghandbook.workers
+package com.example.animalcrossinghandbook.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -30,6 +28,9 @@ class VillagerDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        setHasOptionsMenu(true)
+
         val binding = DataBindingUtil.inflate<FragmentVillagerDetailBinding>(
             inflater, R.layout.fragment_villager_detail, container, false
         ).apply {
@@ -62,6 +63,9 @@ class VillagerDetailFragment : Fragment() {
 
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detail, menu)
+    }
 
     interface Callback {
         fun toggleIsResident(villagerId: Int)

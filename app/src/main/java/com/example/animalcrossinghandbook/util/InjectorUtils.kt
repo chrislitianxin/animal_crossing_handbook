@@ -7,7 +7,6 @@ import com.example.animalcrossinghandbook.data.BugRepository
 import com.example.animalcrossinghandbook.data.FishRepository
 import com.example.animalcrossinghandbook.data.VillagerRepository
 import com.example.animalcrossinghandbook.viewmodelfactorys.*
-import com.example.animalcrossinghandbook.workers.VillagerDetailFragment
 
 object InjectorUtils {
     /**

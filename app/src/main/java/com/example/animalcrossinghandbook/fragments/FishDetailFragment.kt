@@ -1,9 +1,8 @@
-package com.example.animalcrossinghandbook.workers
+package com.example.animalcrossinghandbook.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
+import androidx.appcompat.app.ActionBar
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
@@ -13,6 +12,7 @@ import com.example.animalcrossinghandbook.R
 import com.example.animalcrossinghandbook.databinding.FragmentFishDetailBinding
 import com.example.animalcrossinghandbook.util.InjectorUtils
 import com.example.animalcrossinghandbook.viewmodels.FishDetailViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 /**
@@ -32,6 +32,10 @@ class FishDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        setHasOptionsMenu(true)
+        //requireActivity().actionBar!!.title = "hello world"
+
         val binding = DataBindingUtil.inflate<FragmentFishDetailBinding>(
             inflater, R.layout.fragment_fish_detail, container, false
         ).apply {
@@ -40,6 +44,8 @@ class FishDetailFragment : Fragment() {
             callback = object : Callback {
                 override fun toggleInMuseum(fishId: Int) {
                     fishDetailViewModel.toggleInMuseum()
+                    Snackbar.make(root, R.string.added_to_museum, Snackbar.LENGTH_LONG)
+                        .show()
                 }
             }
 
@@ -49,7 +55,6 @@ class FishDetailFragment : Fragment() {
             inMuseumToggle.setOnClickListener {
                 fishDetailViewModel.toggleInMuseum()
             }
-
         }
 
 
@@ -63,7 +68,12 @@ class FishDetailFragment : Fragment() {
         })
 
         return binding.root
+    }
 
+
+    // show share intent
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detail, menu)
     }
 
 

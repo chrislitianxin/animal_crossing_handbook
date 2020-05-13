@@ -8,16 +8,20 @@
     <!-- BUGS -->
     <fragment
         android:id="@+id/navigation_bugs"
-        android:name="com.example.animalcrossinghandbook.workers.BugsFragment"
+        android:name="com.example.animalcrossinghandbook.fragments.BugsFragment"
         android:label="BugsFragment">
         <action
             android:id="@+id/action_bugsFragment_to_bugDetailFragment"
-            app:destination="@id/bugDetailFragment" />
+            app:destination="@id/bugDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
 
     </fragment>
     <fragment
         android:id="@+id/bugDetailFragment"
-        android:name="com.example.animalcrossinghandbook.workers.BugDetailFragment"
+        android:name="com.example.animalcrossinghandbook.fragments.BugDetailFragment"
         android:label="BugDetailFragment">
         <argument
             android:name="bugId"
@@ -30,15 +34,19 @@
     <!-- VILLAGERS -->
     <fragment
         android:id="@+id/navigation_villagers"
-        android:name="com.example.animalcrossinghandbook.workers.VillagersFragment"
+        android:name="com.example.animalcrossinghandbook.fragments.VillagersFragment"
         android:label="VillagersFragment">
         <action
             android:id="@+id/action_villagersFragment_to_villagerDetailFragment"
-            app:destination="@id/villagerDetailFragment" />
+            app:destination="@id/villagerDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/villagerDetailFragment"
-        android:name="com.example.animalcrossinghandbook.workers.VillagerDetailFragment"
+        android:name="com.example.animalcrossinghandbook.fragments.VillagerDetailFragment"
         android:label="VillagerDetailFragment">
         <argument
             android:name="villagerId"
@@ -51,15 +59,19 @@
     <!-- FISH -->
     <fragment
         android:id="@+id/navigation_fish"
-        android:name="com.example.animalcrossinghandbook.workers.FishFragment"
+        android:name="com.example.animalcrossinghandbook.fragments.FishFragment"
         android:label="FishFragment">
         <action
             android:id="@+id/action_fishFragment_to_fishDetailFragment"
-            app:destination="@id/fishDetailFragment" />
+            app:destination="@id/fishDetailFragment"
+            app:enterAnim="@anim/slide_in_right"
+            app:exitAnim="@anim/slide_out_left"
+            app:popEnterAnim="@anim/slide_in_left"
+            app:popExitAnim="@anim/slide_out_right" />
     </fragment>
     <fragment
         android:id="@+id/fishDetailFragment"
-        android:name="com.example.animalcrossinghandbook.workers.FishDetailFragment"
+        android:name="com.example.animalcrossinghandbook.fragments.FishDetailFragment"
         android:label="FishDetailFragment">
         <argument
             android:name="fishId"

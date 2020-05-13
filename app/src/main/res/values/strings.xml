@@ -5,5 +5,8 @@
     <string name="title_villagers">Villagers</string>
     <string name="donated">Donated</string>
     <string name="donate">Donate!</string>
+    <string name="added_to_museum">Added to Museum!</string>
+    <string name="menu_item_share">Share</string>
+
 
 </resources>

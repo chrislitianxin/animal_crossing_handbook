@@ -1,4 +1,4 @@
-package com.example.animalcrossinghandbook.workers
+package com.example.animalcrossinghandbook.fragments
 
 import android.os.Bundle
 import android.view.*
@@ -7,25 +7,23 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.example.animalcrossinghandbook.R
-import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
-import com.example.animalcrossinghandbook.data.Bug
-import com.example.animalcrossinghandbook.databinding.FragmentListBugsBinding
+import com.example.animalcrossinghandbook.data.Villager
+import com.example.animalcrossinghandbook.databinding.FragmentListVillagersBinding
 import com.example.animalcrossinghandbook.adapters.ListItemAdapter
 import com.example.animalcrossinghandbook.util.InjectorUtils
-import com.example.animalcrossinghandbook.viewmodelfactorys.BugsViewModelFactory
-import com.example.animalcrossinghandbook.viewmodels.BugsViewModel
+import com.example.animalcrossinghandbook.viewmodels.VillagersViewModel
 
 
-class BugsFragment : Fragment() {
+class VillagersFragment : Fragment() {
 
-    private val mAdapter = ListItemAdapter(R.layout.list_item_bug)
-    private val viewModel: BugsViewModel by viewModels {
-        InjectorUtils.provideBugsViewModelFactory(this)
+
+    private val mAdapter = ListItemAdapter(R.layout.list_item_villager)
+    private val viewModel: VillagersViewModel by viewModels {
+        InjectorUtils.provideVillagersViewModelFactory(this)
     }
 
     override fun onCreateView(
@@ -38,15 +36,15 @@ class BugsFragment : Fragment() {
         // Enable search in app bar
         setHasOptionsMenu(true)
 
-        val binding = DataBindingUtil.inflate<FragmentListBugsBinding>(
-            inflater, R.layout.fragment_list_bugs, container, false
+        val binding = DataBindingUtil.inflate<FragmentListVillagersBinding>(
+            inflater, R.layout.fragment_list_villagers, container, false
         ).apply {
             viewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
-            bugsList.adapter = mAdapter
-            bugsList.layoutManager = GridLayoutManager(activity, 3)
-
+            villagersList.adapter = mAdapter
+            villagersList.layoutManager = LinearLayoutManager(activity)
         }
+
 
         subscribeUI()
 
@@ -54,22 +52,13 @@ class BugsFragment : Fragment() {
          * Set card click navigation
          */
         mAdapter.setOnItemClickListener(OnItemClickListener { adapter, _, position ->
-            val bugId = (adapter.getItem(position) as Bug).id
+            val villagerId: Int = (adapter.getItem(position) as Villager).id
             findNavController().navigate(
-                BugsFragmentDirections.actionBugsFragmentToBugDetailFragment(bugId)
+                VillagersFragmentDirections.actionVillagersFragmentToVillagerDetailFragment(
+                    villagerId
+                )
             )
         })
-
-        /**
-         * Set long click in_museum toggle switch
-         */
-        mAdapter.setOnItemLongClickListener { _, _, position ->
-            // notify data change
-            val bugId = (mAdapter.getItem(position) as Bug).id
-            viewModel.toggleInMuseumById(bugId)
-
-            true
-        }
 
 
         return binding.root
@@ -80,19 +69,22 @@ class BugsFragment : Fragment() {
      * Subscribe data to UI
      */
     private fun subscribeUI() {
-        viewModel.bugs.observe(viewLifecycleOwner, Observer {
+        viewModel.villagers.observe(viewLifecycleOwner, Observer {
             it?.let {
                 mAdapter.setList(it)
             }
         })
     }
 
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_list, menu)
+    }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
 
         val menuItem = menu.findItem(R.id.item_search)
-        //menuItem.isVisible = true
+        menuItem.isVisible = true
 
         val searchView =
             menuItem.actionView as SearchView

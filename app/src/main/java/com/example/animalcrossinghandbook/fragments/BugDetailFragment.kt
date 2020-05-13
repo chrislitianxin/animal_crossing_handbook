@@ -1,21 +1,17 @@
-package com.example.animalcrossinghandbook.workers
+package com.example.animalcrossinghandbook.fragments
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
+import android.view.*
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.navArgs
 import com.example.animalcrossinghandbook.R
-import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
 import com.example.animalcrossinghandbook.databinding.FragmentBugDetailBinding
 import com.example.animalcrossinghandbook.util.InjectorUtils
-import com.example.animalcrossinghandbook.viewmodelfactorys.BugDetailViewModelFactory
 import com.example.animalcrossinghandbook.viewmodels.BugDetailViewModel
+import com.google.android.material.snackbar.Snackbar
 
 
 /**
@@ -35,6 +31,9 @@ class BugDetailFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
+
+        setHasOptionsMenu(true)
+
         val binding = DataBindingUtil.inflate<FragmentBugDetailBinding>(
             inflater, R.layout.fragment_bug_detail, container, false
         ).apply {
@@ -43,6 +42,8 @@ class BugDetailFragment : Fragment() {
             callback = object : Callback {
                 override fun toggleInMuseum(bugId: Int) {
                     bugDetailViewModel.toggleInMuseum()
+                    Snackbar.make(root, R.string.added_to_museum, Snackbar.LENGTH_LONG)
+                        .show()
                 }
             }
 
@@ -67,6 +68,10 @@ class BugDetailFragment : Fragment() {
 
         return binding.root
 
+    }
+
+    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+        inflater.inflate(R.menu.menu_detail, menu)
     }
 
 
