@@ -1,25 +1,31 @@
 package com.example.animalcrossinghandbook.viewmodelfactorys
 
-import android.app.Application
+import android.os.Bundle
+import androidx.lifecycle.AbstractSavedStateViewModelFactory
+import androidx.lifecycle.SavedStateHandle
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.ViewModelProvider
-import com.example.animalcrossinghandbook.data.FishDao
+import androidx.savedstate.SavedStateRegistryOwner
+import com.example.animalcrossinghandbook.data.BugRepository
+import com.example.animalcrossinghandbook.data.FishRepository
+import com.example.animalcrossinghandbook.viewmodels.BugsViewModel
 import com.example.animalcrossinghandbook.viewmodels.FishViewModel
 
-/* Boiler code pretty much */
-
+/**
+ * Factory for creating a [FishViewModel] with a constructor that
+ * takes a [FishRepository].
+ */
 class FishViewModelFactory(
-    private val dataSource: FishDao,
-    private val application: Application
-) : ViewModelProvider.Factory {
+    private val repository: FishRepository,
+    owner: SavedStateRegistryOwner,
+    defaultArgs: Bundle? = null
+) : AbstractSavedStateViewModelFactory(owner, defaultArgs) {
 
     @Suppress("unchecked_cast")
-    override fun <T : ViewModel?> create(modelClass: Class<T>): T {
-        if (modelClass.isAssignableFrom(FishViewModel::class.java)) {
-            return FishViewModel(
-                dataSource, application
-            ) as T
-        }
-        throw IllegalArgumentException("Unknown ViewModel class")
+    override fun <T : ViewModel?> create(
+        key: String,
+        modelClass: Class<T>,
+        handle: SavedStateHandle
+    ): T {
+        return FishViewModel(repository, handle) as T
     }
 }

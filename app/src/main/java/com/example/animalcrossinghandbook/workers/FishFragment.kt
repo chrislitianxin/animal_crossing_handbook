@@ -7,25 +7,22 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.chad.library.adapter.base.listener.OnItemClickListener
 import com.example.animalcrossinghandbook.R
-import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
-import com.example.animalcrossinghandbook.data.Bug
-import com.example.animalcrossinghandbook.databinding.FragmentListBugsBinding
 import com.example.animalcrossinghandbook.adapters.ListItemAdapter
+import com.example.animalcrossinghandbook.data.Fish
+import com.example.animalcrossinghandbook.databinding.FragmentListFishBinding
 import com.example.animalcrossinghandbook.util.InjectorUtils
-import com.example.animalcrossinghandbook.viewmodelfactorys.BugsViewModelFactory
-import com.example.animalcrossinghandbook.viewmodels.BugsViewModel
+import com.example.animalcrossinghandbook.viewmodels.FishViewModel
 
 
-class BugsFragment : Fragment() {
+class FishFragment : Fragment() {
 
-    private val mAdapter = ListItemAdapter(R.layout.list_item_bug)
-    private val viewModel: BugsViewModel by viewModels {
-        InjectorUtils.provideBugsViewModelFactory(this)
+    private val mAdapter = ListItemAdapter(R.layout.list_item_fish)
+    private val viewModel: FishViewModel by viewModels {
+        InjectorUtils.provideFishViewModelFactory(this)
     }
 
     override fun onCreateView(
@@ -38,13 +35,13 @@ class BugsFragment : Fragment() {
         // Enable search in app bar
         setHasOptionsMenu(true)
 
-        val binding = DataBindingUtil.inflate<FragmentListBugsBinding>(
-            inflater, R.layout.fragment_list_bugs, container, false
+        val binding = DataBindingUtil.inflate<FragmentListFishBinding>(
+            inflater, R.layout.fragment_list_fish, container, false
         ).apply {
             viewModel = viewModel
             lifecycleOwner = viewLifecycleOwner
-            bugsList.adapter = mAdapter
-            bugsList.layoutManager = GridLayoutManager(activity, 3)
+            fishList.adapter = mAdapter
+            fishList.layoutManager = GridLayoutManager(activity, 3)
 
         }
 
@@ -54,9 +51,9 @@ class BugsFragment : Fragment() {
          * Set card click navigation
          */
         mAdapter.setOnItemClickListener(OnItemClickListener { adapter, _, position ->
-            val bugId = (adapter.getItem(position) as Bug).id
+            val fishId = (adapter.getItem(position) as Fish).id
             findNavController().navigate(
-                BugsFragmentDirections.actionBugsFragmentToBugDetailFragment(bugId)
+                FishFragmentDirections.actionFishFragmentToFishDetailFragment(fishId)
             )
         })
 
@@ -65,8 +62,8 @@ class BugsFragment : Fragment() {
          */
         mAdapter.setOnItemLongClickListener { _, _, position ->
             // notify data change
-            val bugId = (mAdapter.getItem(position) as Bug).id
-            viewModel.toggleInMuseumById(bugId)
+            val fishId = (mAdapter.getItem(position) as Fish).id
+            viewModel.toggleInMuseumById(fishId)
 
             true
         }
@@ -80,7 +77,7 @@ class BugsFragment : Fragment() {
      * Subscribe data to UI
      */
     private fun subscribeUI() {
-        viewModel.bugs.observe(viewLifecycleOwner, Observer {
+        viewModel.fish.observe(viewLifecycleOwner, Observer {
             it?.let {
                 mAdapter.setList(it)
             }
@@ -92,7 +89,7 @@ class BugsFragment : Fragment() {
         super.onPrepareOptionsMenu(menu)
 
         val menuItem = menu.findItem(R.id.item_search)
-        //menuItem.isVisible = true
+        menuItem.isVisible = true
 
         val searchView =
             menuItem.actionView as SearchView

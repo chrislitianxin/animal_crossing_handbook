@@ -4,11 +4,9 @@ import android.content.Context
 import androidx.fragment.app.Fragment
 import com.example.animalcrossinghandbook.data.AnimalCrossingDatabase
 import com.example.animalcrossinghandbook.data.BugRepository
+import com.example.animalcrossinghandbook.data.FishRepository
 import com.example.animalcrossinghandbook.data.VillagerRepository
-import com.example.animalcrossinghandbook.viewmodelfactorys.BugDetailViewModelFactory
-import com.example.animalcrossinghandbook.viewmodelfactorys.BugsViewModelFactory
-import com.example.animalcrossinghandbook.viewmodelfactorys.VillagerDetailViewModelFactory
-import com.example.animalcrossinghandbook.viewmodelfactorys.VillagersViewModelFactory
+import com.example.animalcrossinghandbook.viewmodelfactorys.*
 import com.example.animalcrossinghandbook.workers.VillagerDetailFragment
 
 object InjectorUtils {
@@ -31,6 +29,27 @@ object InjectorUtils {
         context: Context, bugId: Int
     ): BugDetailViewModelFactory {
         return BugDetailViewModelFactory(getBugRepository(context), bugId)
+    }
+
+    /**
+     * Fish
+     */
+    private fun getFishRepository(context: Context): FishRepository {
+        return FishRepository.getInstance(
+            AnimalCrossingDatabase.getInstance(context.applicationContext).fishDao()
+        )
+    }
+
+    fun provideFishViewModelFactory(fragment: Fragment): FishViewModelFactory {
+        val repository = getFishRepository(fragment.requireContext())
+        return FishViewModelFactory(repository, fragment)
+    }
+
+
+    fun provideFishDetailViewModelFactory(
+        context: Context, fishId: Int
+    ): FishDetailViewModelFactory {
+        return FishDetailViewModelFactory(getFishRepository(context), fishId)
     }
 
 

@@ -1,8 +1,8 @@
 <resources>
     <string name="app_name">animalCrossingHandbook</string>
-    <string name="title_home">Home</string>
-    <string name="title_explore">Explore</string>
-    <string name="title_notifications">Notifications</string>
+    <string name="title_bugs">Bug</string>
+    <string name="title_fish">Fish</string>
+    <string name="title_villagers">Villagers</string>
     <string name="donated">Donated</string>
     <string name="donate">Donate!</string>
 

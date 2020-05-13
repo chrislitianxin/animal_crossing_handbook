@@ -22,7 +22,7 @@ fun TextView.setBugPrice(price: Int) {
 }
 
 @BindingAdapter("bugIcon")
-fun ImageView.setBugIcon(filename: String) {
+fun ImageView.setBugIcon(filename: String?) {
     filename.let {
         val drawableId: Int =
             context.resources.getIdentifier(filename, "drawable", context.packageName)
@@ -55,12 +55,11 @@ fun ImageView.setBugImage(filename: String?) {
 fun TextView.setFishPrice(price: Int) {
     price.let {
         text = price.toString()
-
     }
 }
 
 @BindingAdapter("fishIcon")
-fun ImageView.setFishIcon(filename: String) {
+fun ImageView.setFishIcon(filename: String?) {
     filename.let {
         val drawableId: Int =
             context.resources.getIdentifier(filename, "drawable", context.packageName)
@@ -69,7 +68,7 @@ fun ImageView.setFishIcon(filename: String) {
 }
 
 @BindingAdapter("fishImage")
-fun ImageView.setFishImage(filename: String) {
+fun ImageView.setFishImage(filename: String?) {
     filename.let {
         val fileUri = IMAGE_BASE_PATH + "/fish/${filename}.png"
         try {
@@ -88,7 +87,7 @@ fun ImageView.setFishImage(filename: String) {
  */
 
 @BindingAdapter("villagerIcon")
-fun ImageView.setVillagerIcon(filename: String) {
+fun ImageView.setVillagerIcon(filename: String?) {
     filename.let {
         val drawableId: Int =
             context.resources.getIdentifier(filename, "drawable", context.packageName)

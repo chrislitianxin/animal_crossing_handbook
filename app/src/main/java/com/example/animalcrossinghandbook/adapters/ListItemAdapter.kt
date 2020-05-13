@@ -12,6 +12,7 @@ import com.example.animalcrossinghandbook.data.Bug
 import com.example.animalcrossinghandbook.data.Fish
 import com.example.animalcrossinghandbook.data.Villager
 import com.example.animalcrossinghandbook.databinding.ListItemBugBinding
+import com.example.animalcrossinghandbook.databinding.ListItemFishBinding
 import com.example.animalcrossinghandbook.databinding.ListItemVillagerBinding
 import org.jetbrains.annotations.NotNull
 import timber.log.Timber
@@ -70,14 +71,14 @@ class ListItemAdapter(
     }
 
     private fun convertFish(holder: BaseViewHolder, item: Fish) {
-//
-//        val binding: ListItemFishBinding? = DataBindingUtil.getBinding(holder.itemView)
-//
-//        if (binding != null) {
-//            // set data
-//            binding.fish = item
-//            binding.executePendingBindings()
-//        }
+
+        val binding: ListItemFishBinding? = DataBindingUtil.getBinding(holder.itemView)
+
+        if (binding != null) {
+            // set data
+            binding.fish = item
+            binding.executePendingBindings()
+        }
     }
 
     // converter for Villagers

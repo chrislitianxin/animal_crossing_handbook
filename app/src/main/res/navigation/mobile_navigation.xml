@@ -3,36 +3,11 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/mobile_navigation"
-    app:startDestination="@+id/navigation_explore">
-
-    <fragment
-        android:id="@+id/navigation_home"
-        android:name="com.example.animalcrossinghandbook.workers.HomeFragment"
-        android:label="@string/title_home"
-        tools:layout="@layout/fragment_home" />
-
-    <fragment
-        android:id="@+id/navigation_explore"
-        android:name="com.example.animalcrossinghandbook.workers.ExploreFragment"
-        android:label="@string/title_explore"
-        tools:layout="@layout/fragment_explore">
-        <action
-            android:id="@+id/action_navigation_explore_to_bugsFragment"
-            app:destination="@id/bugsFragment" />
-        <action
-            android:id="@+id/action_navigation_explore_to_villagersFragment"
-            app:destination="@id/villagersFragment" />
-    </fragment>
-
-    <fragment
-        android:id="@+id/navigation_notifications"
-        android:name="com.example.animalcrossinghandbook.workers.NotificationsFragment"
-        android:label="@string/title_notifications"
-        tools:layout="@layout/fragment_notifications" />
+    app:startDestination="@+id/navigation_bugs">
 
     <!-- BUGS -->
     <fragment
-        android:id="@+id/bugsFragment"
+        android:id="@+id/navigation_bugs"
         android:name="com.example.animalcrossinghandbook.workers.BugsFragment"
         android:label="BugsFragment">
         <action
@@ -49,12 +24,12 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_bugDetailFragment_to_bugsFragment"
-            app:destination="@id/bugsFragment" />
+            app:destination="@id/navigation_bugs" />
     </fragment>
 
     <!-- VILLAGERS -->
     <fragment
-        android:id="@+id/villagersFragment"
+        android:id="@+id/navigation_villagers"
         android:name="com.example.animalcrossinghandbook.workers.VillagersFragment"
         android:label="VillagersFragment">
         <action
@@ -70,7 +45,28 @@
             app:argType="integer" />
         <action
             android:id="@+id/action_villagerDetailFragment_to_villagersFragment"
-            app:destination="@id/villagersFragment" />
+            app:destination="@id/navigation_villagers" />
+    </fragment>
+
+    <!-- FISH -->
+    <fragment
+        android:id="@+id/navigation_fish"
+        android:name="com.example.animalcrossinghandbook.workers.FishFragment"
+        android:label="FishFragment">
+        <action
+            android:id="@+id/action_fishFragment_to_fishDetailFragment"
+            app:destination="@id/fishDetailFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/fishDetailFragment"
+        android:name="com.example.animalcrossinghandbook.workers.FishDetailFragment"
+        android:label="FishDetailFragment">
+        <argument
+            android:name="fishId"
+            app:argType="integer" />
+        <action
+            android:id="@+id/action_fishDetailFragment_to_fishFragment"
+            app:destination="@id/navigation_fish" />
     </fragment>
 
 

@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+
+        <variable
+            name="viewModel"
+            type="com.example.animalcrossinghandbook.viewmodels.FishDetailViewModel" />
+
+        <variable
+            name="callback"
+            type="com.example.animalcrossinghandbook.workers.FishDetailFragment.Callback" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        tools:context=".workers.FishDetailFragment">
+
+        <ImageView
+            android:id="@+id/fish_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:contentDescription="Fish Image"
+            app:fishImage="@{viewModel.fish.filename}"
+            app:layout_constraintBottom_toTopOf="@+id/fish_name"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:srcCompat="@drawable/angelfish" />
+
+        <TextView
+            android:id="@+id/fish_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@{viewModel.fish.name}"
+            app:layout_constraintBottom_toTopOf="@+id/fish_price"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.5"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fish_image"
+            tools:text="Angel Fish" />
+
+        <TextView
+            android:id="@+id/fish_price"
+            android:layout_width="17dp"
+            android:layout_height="16dp"
+            app:fishPrice="@{viewModel.fish.price}"
+            app:layout_constraintBottom_toTopOf="@+id/in_museum_toggle"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fish_name"
+            tools:text="500" />
+
+        <Button
+            android:id="@+id/in_museum_toggle"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:onClick="@{() -> callback.toggleInMuseum(viewModel.fish.id)}"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/fish_price" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>

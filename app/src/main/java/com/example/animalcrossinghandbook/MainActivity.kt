@@ -25,13 +25,13 @@ class MainActivity : AppCompatActivity() {
         val navController = findNavController(R.id.nav_host_fragment)
         // Passing each menu ID as a set of Ids because each
         // menu should be considered as top level destinations.
-        val appBarConfiguration = AppBarConfiguration(setOf(
-                R.id.navigation_home, R.id.navigation_explore, R.id.navigation_notifications))
+        val appBarConfiguration = AppBarConfiguration(
+            setOf(
+                R.id.navigation_bugs, R.id.navigation_fish, R.id.navigation_villagers
+            )
+        )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
-
-        //supportActionBar?.setDisplayHomeAsUpEnabled(true);
-        //supportActionBar.setDisplayShowHomeEnabled(true);
 
 
     }
@@ -41,7 +41,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreateOptionsMenu(menu)
 
         menuInflater.inflate(R.menu.options_menu, menu)
-        menu.findItem(R.id.item_search).isVisible = false
+        menu.findItem(R.id.item_search).isVisible = true
         return true
     }
 

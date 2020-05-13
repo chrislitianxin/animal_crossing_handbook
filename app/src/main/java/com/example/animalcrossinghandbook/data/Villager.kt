@@ -15,7 +15,7 @@ data class Villager(
     val species: String,
     val catchPhrase: String?,
     val filename: String,
-    val isResident: Boolean = false
+    var isResident: Boolean = false
 
 ) {
 

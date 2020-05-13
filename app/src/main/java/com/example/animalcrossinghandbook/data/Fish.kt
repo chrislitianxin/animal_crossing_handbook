@@ -13,7 +13,7 @@ data class Fish(
     val shadow: String?,
     val price: Int?,
     val filename: String?,
-    val inMuseum: Boolean = false,
+    var inMuseum: Boolean = false,
 
     @Embedded
     val availability: Availability
