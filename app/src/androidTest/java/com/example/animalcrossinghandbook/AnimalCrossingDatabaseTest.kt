@@ -45,6 +45,8 @@ class AnimalCrossingDatabaseUnitTest {
             1,
             "Common butterfly",
             160,
+            "common_butterfly",
+            false,
             Availability(
                 "4am - 7pm",
                 "9-6",
@@ -53,14 +55,13 @@ class AnimalCrossingDatabaseUnitTest {
                 "Common",
                 false,
                 false
-            ),
-            "common_butterfly"
+            )
         )
 
         bugDao.insert(testBug)
-        val bug = bugDao.get(1)
+        val bug = bugDao.getById(1)
         assertEquals(bug, testBug)
-        assertEquals(bug?.name, "Common butterfly")
+        assertEquals(bug.value?.name, "Common butterfly")
 
     }
 
@@ -73,6 +74,8 @@ class AnimalCrossingDatabaseUnitTest {
             "Bitterling",
             "Smallest (1)",
             900,
+            "bitterling",
+            false,
             Availability(
                 "",
                 "11-3",
@@ -81,12 +84,11 @@ class AnimalCrossingDatabaseUnitTest {
                 "Common",
                 true,
                 false
-            ),
-            "common_butterfly"
+            )
         )
 
         fishDao.insert(testFish)
-        assertEquals(fishDao.get(1), testFish)
-        assertEquals(fishDao.get(1)?.name, "Bitterling")
+        assertEquals(fishDao.getById(1), testFish)
+        assertEquals(fishDao.getById(1).value?.name, "Bitterling")
     }
 }
