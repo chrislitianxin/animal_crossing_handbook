@@ -1,7 +1,9 @@
 package com.example.animalcrossinghandbook.fragments
 
+import android.os.Build
 import android.os.Bundle
 import android.view.*
+import androidx.annotation.RequiresApi
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -16,6 +18,8 @@ import com.example.animalcrossinghandbook.databinding.FragmentListBugsBinding
 import com.example.animalcrossinghandbook.adapters.ListItemAdapter
 import com.example.animalcrossinghandbook.util.InjectorUtils
 import com.example.animalcrossinghandbook.viewmodels.BugsViewModel
+import kotlinx.android.synthetic.main.fragment_list_bugs.*
+import timber.log.Timber
 
 
 class BugsFragment : Fragment() {
@@ -25,15 +29,13 @@ class BugsFragment : Fragment() {
         InjectorUtils.provideBugsViewModelFactory(this)
     }
 
+    @RequiresApi(Build.VERSION_CODES.M)
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
 
     ): View? {
-
-        // Enable search in app bar
-        setHasOptionsMenu(true)
 
         val binding = DataBindingUtil.inflate<FragmentListBugsBinding>(
             inflater, R.layout.fragment_list_bugs, container, false
@@ -64,10 +66,12 @@ class BugsFragment : Fragment() {
             // notify data change
             val bugId = (mAdapter.getItem(position) as Bug).id
             viewModel.toggleInMuseumById(bugId)
-
             true
         }
 
+
+        // Enable search in app bar
+        setHasOptionsMenu(true)
 
         return binding.root
     }
@@ -86,14 +90,14 @@ class BugsFragment : Fragment() {
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.menu_list, menu)
+        Timber.i("called")
     }
 
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
 
-        val menuItem = menu.findItem(R.id.item_search)
-        //menuItem.isVisible = true
-
+        val menuItem = menu.findItem(R.id.action_item_search)
+        Timber.i("Search")
         val searchView =
             menuItem.actionView as SearchView
 

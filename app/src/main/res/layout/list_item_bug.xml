@@ -22,8 +22,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:layout_margin="8dp"
-            android:layout_marginEnd="303dp"
-            android:layout_marginRight="303dp"
             android:layout_weight="1"
             card_view:layout_constraintBottom_toBottomOf="parent"
             card_view:layout_constraintEnd_toEndOf="parent"
@@ -39,9 +37,10 @@
                 <!-- Media -->
                 <ImageView
                     android:id="@+id/bug_image"
-                    android:layout_width="100dp"
-                    android:layout_height="100dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="@dimen/critters_item_icon_height"
                     android:contentDescription="@+id/bug_name"
+                    android:scaleType="fitCenter"
                     app:bugIcon="@{bug.filename}"
                     tools:srcCompat="@drawable/firefly" />
 
@@ -62,7 +61,7 @@
 
                     <TextView
                         android:id="@+id/bug_price"
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="8dp"
                         android:textAppearance="?attr/textAppearanceBody2"
@@ -72,7 +71,7 @@
 
                     <TextView
                         android:id="@+id/bug_location"
-                        android:layout_width="18dp"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="16dp"
                         android:text="@{bug.availability.location}"

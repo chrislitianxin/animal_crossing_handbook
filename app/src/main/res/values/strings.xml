@@ -9,4 +9,12 @@
     <string name="menu_item_share">Share</string>
 
 
+    <string name="chip_all">All</string>
+    <string name="chip_active">Active</string>
+    <string name="chip_in_museum">In Museum</string>
+    <string name="chip_not_in_museum">Not In Museum</string>
+    <string name="chip_last_month">Last Month</string>
+    <string name="chip_new_this_month">New This Month</string>
+    <string name="search">search</string>
+
 </resources>

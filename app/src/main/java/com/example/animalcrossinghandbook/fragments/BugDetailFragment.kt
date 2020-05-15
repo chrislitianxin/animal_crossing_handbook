@@ -6,12 +6,14 @@ import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.navArgs
 import com.example.animalcrossinghandbook.R
 import com.example.animalcrossinghandbook.databinding.FragmentBugDetailBinding
 import com.example.animalcrossinghandbook.util.InjectorUtils
 import com.example.animalcrossinghandbook.viewmodels.BugDetailViewModel
 import com.google.android.material.snackbar.Snackbar
+import kotlinx.android.synthetic.main.fragment_bug_detail.*
 
 
 /**
@@ -54,6 +56,10 @@ class BugDetailFragment : Fragment() {
                 bugDetailViewModel.toggleInMuseum()
             }
 
+            toolbar.setNavigationOnClickListener { view ->
+                view.findNavController().navigateUp()
+            }
+
         }
 
 
@@ -69,10 +75,10 @@ class BugDetailFragment : Fragment() {
         return binding.root
 
     }
-
-    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
-        inflater.inflate(R.menu.menu_detail, menu)
-    }
+//
+//    override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
+//        inflater.inflate(R.menu.menu_detail, menu)
+//    }
 
 
     interface Callback {

@@ -83,7 +83,7 @@ class VillagersFragment : Fragment() {
     override fun onPrepareOptionsMenu(menu: Menu) {
         super.onPrepareOptionsMenu(menu)
 
-        val menuItem = menu.findItem(R.id.item_search)
+        val menuItem = menu.findItem(R.id.action_item_search)
         menuItem.isVisible = true
 
         val searchView =
