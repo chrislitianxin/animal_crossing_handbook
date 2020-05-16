@@ -2,6 +2,7 @@ package com.example.animalcrossinghandbook.fragments
 
 import android.os.Bundle
 import android.view.*
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -33,8 +34,6 @@ class VillagersFragment : Fragment() {
 
     ): View? {
 
-        // Enable search in app bar
-        setHasOptionsMenu(true)
 
         val binding = DataBindingUtil.inflate<FragmentListVillagersBinding>(
             inflater, R.layout.fragment_list_villagers, container, false
@@ -60,6 +59,10 @@ class VillagersFragment : Fragment() {
             )
         })
 
+        // attach toolbar to the fragment, otherwise search filtering does not work
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+        // Enable search in app bar
+        setHasOptionsMenu(true)
 
         return binding.root
     }

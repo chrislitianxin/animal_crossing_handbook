@@ -15,68 +15,93 @@
             type="com.example.animalcrossinghandbook.fragments.VillagerDetailFragment.Callback" />
     </data>
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:context=".fragments.VillagerDetailFragment">
+        android:fitsSystemWindows="true"
+        tools:context=".fragments.BugDetailFragment">
 
-        <ImageView
-            android:id="@+id/villager_image"
-            android:layout_width="wrap_content"
+        <com.google.android.material.appbar.AppBarLayout
+            android:id="@+id/appbar"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:contentDescription="Villager Image"
-            app:layout_constraintBottom_toTopOf="@+id/villager_name"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:villagerImage="@{viewModel.villager.filename}"
-            tools:srcCompat="@drawable/ant01" />
+            android:fitsSystemWindows="true"
+            android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+            app:liftOnScroll="true">
 
-        <TextView
-            android:id="@+id/villager_name"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.villager.name}"
-            app:layout_constraintBottom_toTopOf="@+id/villager_personality"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.5"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/villager_image"
-            tools:text="Villager Bla" />
+            <androidx.appcompat.widget.Toolbar
+                android:id="@+id/toolbar"
+                android:layout_width="match_parent"
+                android:layout_height="?attr/actionBarSize"
+                app:contentInsetStartWithNavigation="0dp"
+                app:menu="@menu/menu_detail"
+                app:navigationIcon="@drawable/ic_arrow_back_24dp"
+                app:title="@{viewModel.villager.name}" />
 
-        <TextView
-            android:id="@+id/villager_personality"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.villager.personality}"
-            app:layout_constraintBottom_toTopOf="@+id/villager_catch_phrase"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/villager_name"
-            tools:text="Sisterly" />
+        </com.google.android.material.appbar.AppBarLayout>
 
-        <TextView
-            android:id="@+id/villager_catch_phrase"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@{viewModel.villager.catchPhrase}"
-            app:layout_constraintBottom_toTopOf="@+id/is_resident_toggle"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/villager_personality"
-            tools:text="Hahaha" />
+        <androidx.constraintlayout.widget.ConstraintLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            tools:context=".fragments.VillagerDetailFragment">
 
-        <Button
-            android:id="@+id/is_resident_toggle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:onClick="@{() -> callback.toggleIsResident(viewModel.villager.id)}"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/villager_catch_phrase" />
+            <ImageView
+                android:id="@+id/villager_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:contentDescription="Villager Image"
+                app:layout_constraintBottom_toTopOf="@+id/villager_name"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                app:villagerImage="@{viewModel.villager.filename}"
+                tools:srcCompat="@drawable/ant01" />
 
+            <TextView
+                android:id="@+id/villager_name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.villager.name}"
+                app:layout_constraintBottom_toTopOf="@+id/villager_personality"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.5"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/villager_image"
+                tools:text="Villager Bla" />
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+            <TextView
+                android:id="@+id/villager_personality"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.villager.personality}"
+                app:layout_constraintBottom_toTopOf="@+id/villager_catch_phrase"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/villager_name"
+                tools:text="Sisterly" />
+
+            <TextView
+                android:id="@+id/villager_catch_phrase"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@{viewModel.villager.catchPhrase}"
+                app:layout_constraintBottom_toTopOf="@+id/is_resident_toggle"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/villager_personality"
+                tools:text="Hahaha" />
+
+            <Button
+                android:id="@+id/is_resident_toggle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:onClick="@{() -> callback.toggleIsResident(viewModel.villager.id)}"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/villager_catch_phrase" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
 </layout>
