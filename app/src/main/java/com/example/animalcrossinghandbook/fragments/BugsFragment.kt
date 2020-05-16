@@ -4,6 +4,7 @@ import android.os.Build
 import android.os.Bundle
 import android.view.*
 import androidx.annotation.RequiresApi
+import androidx.appcompat.app.AppCompatActivity
 import androidx.appcompat.widget.SearchView
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
@@ -46,6 +47,10 @@ class BugsFragment : Fragment() {
             bugsList.layoutManager = GridLayoutManager(activity, 3)
 
         }
+
+        // attach toolbar to the fragment, otherwise search filtering does not work
+        (activity as AppCompatActivity).setSupportActionBar(binding.toolbar)
+
 
         subscribeUI()
 
